@@ -587,6 +587,27 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .ruqc blockquote { flex: 1; }
 
 /* ============================================================
+   OP-ED / OPINION BLOCK (VK critique)
+   ============================================================ */
+.oped { margin-top: clamp(2.5rem, 5vw, 3.5rem); padding: clamp(1.6rem, 4vw, 2.6rem); border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(125deg, oklch(0.23 0.04 300 / 0.55), oklch(0.20 0.022 264 / 0.45)); }
+.oped__label { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--mono); font-size: 0.72rem; color: var(--status-discussion); border: 1px solid color-mix(in oklch, var(--status-discussion) 50%, transparent); padding: 0.3rem 0.7rem; border-radius: 999px; margin-bottom: 1.1rem; }
+.oped__label::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--status-discussion); }
+.oped h3 { font-size: clamp(1.3rem, 3vw, 1.95rem); margin-bottom: 1rem; }
+.oped__lead { color: var(--ink); font-size: clamp(1rem, 1.8vw, 1.18rem); line-height: 1.6; text-wrap: pretty; max-width: 64ch; }
+.oped__lead b { font-weight: 600; }
+.oped__facts { display: grid; gap: 0.75rem; margin: 1.5rem 0; }
+.oped__fact { display: flex; gap: 0.7rem; font-size: 0.92rem; color: var(--ink-2); line-height: 1.5; text-wrap: pretty; }
+.oped__fact::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--status-discussion); margin-top: 0.5rem; flex: none; }
+.oped__fact a { color: var(--ink-3); font-family: var(--mono); font-size: 0.78rem; text-decoration: none; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.oped__fact a:hover { color: var(--ink); }
+.oped__q { margin: 1.3rem 0 0; padding: 1.1rem 1.25rem; border: 1px solid var(--line-soft); border-radius: 13px; background: var(--surface); color: var(--ink); font-size: 0.98rem; line-height: 1.55; text-wrap: pretty; }
+.oped__q cite { display: block; margin-top: 0.6rem; font-style: normal; color: var(--ink-3); font-size: 0.8rem; }
+.oped__q cite a { color: var(--ink-3); font-family: var(--mono); border-bottom: 1px solid var(--line); text-decoration: none; }
+.oped__q cite a:hover { color: var(--ink); }
+.oped__caveat { margin-top: 1.4rem; font-size: 0.88rem; color: var(--ink-3); line-height: 1.6; text-wrap: pretty; }
+.oped__caveat b { color: var(--ink-2); font-weight: 600; }
+
+/* ============================================================
    RANKING TABLE
    ============================================================ */
 .ranking { padding-block: clamp(2rem, 5vw, 4rem); }
@@ -990,6 +1011,19 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
           </div>
         </div>
         <div class="ruq__track" id="ruq-track"></div>
+      </div>
+
+      <div class="oped" id="vk-mnenie">
+        <span class="oped__label">Мнение · @ne_cybersec</span>
+        <h3>Запретят ли в России соцсети? Наш скептический взгляд</h3>
+        <p class="oped__lead">Государство здесь одновременно и <b>регулятор</b> соцсетей, и фактический <b>владелец</b> крупнейшей из них. На наш взгляд, в такой конфигурации жёсткий запрет соцсетей маловероятен — он ударил бы по собственной экосистеме. Поэтому реальную защиту детей рискует подменить «импортозамещение»: увод аудитории на отечественные платформы вместо честного разговора о вреде и правилах.</p>
+        <div class="oped__facts">
+          <div class="oped__fact"><span>VK контролирует «МФ Технологии» — 57,3% голосов; её совладельцы СОГАЗ и «Газпром-медиа» (по 45%), ещё 10% у «Ростеха»; гендиректор VK — Владимир Кириенко.</span> <a href="https://www.interfax.ru/business/1033173" target="_blank" rel="noopener">Интерфакс ↗</a></div>
+          <div class="oped__fact"><span>Мессенджер MAX от VK признан национальным (156-ФЗ, 2025) и обязателен к предустановке на устройства с 1 сентября 2025; в школы приходит через «Сферум».</span> <a href="https://ria.ru/20250901/max-2038723229.html" target="_blank" rel="noopener">РИА ↗</a></div>
+          <div class="oped__fact"><span>«Единая Россия» — против запрета соцсетей до 14 лет; ставка на «развитие отечественных платформ», а доступ детей назван «внутрисемейным делом».</span> <a href="https://www.interfax.ru/russia/1090195" target="_blank" rel="noopener">Интерфакс ↗</a></div>
+        </div>
+        <blockquote class="oped__q">«Государству хочется иметь контролируемый национальный интернет… Очевидно, что пользователи будут этому сопротивляться — как минимум уходя в VPN».<cite>Александр Бахтин, инвестиционный стратег «Гарда Капитал» · <a href="https://www.forbes.ru/investicii/555300-igra-v-monopoliu-kak-blokirovki-whatsapp-i-telegram-pomogli-akciam-vk" target="_blank" rel="noopener">Forbes.ru ↗</a></cite></blockquote>
+        <p class="oped__caveat"><b>Честно оговоримся:</b> прямого тезиса «власти не запретят соцсети, потому что владеют VK» в источниках нет — это наша интерпретация фактов. Есть и контраргумент: продвижение MAX власти объясняют безопасностью и цифровым суверенитетом, а не вытеснением конкурентов.</p>
       </div>
     </div>
   </section>
