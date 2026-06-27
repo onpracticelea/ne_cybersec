@@ -658,7 +658,7 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
   gap: clamp(1.1rem, 3vw, 1.8rem); padding: 2rem; text-align: center;
   background: radial-gradient(120% 90% at 50% 34%, oklch(0.205 0.03 264), var(--bg-deep));
 }
-html.intro-on .intro { display: flex; animation: introOut 0.85s var(--ease-expo) 3.3s forwards; }
+html.intro-on .intro { display: flex; animation: introOut 0.85s var(--ease-expo) 4s forwards; }
 .intro.intro--skip { animation: introOut 0.42s var(--ease-expo) forwards !important; }
 @keyframes introOut { to { opacity: 0; visibility: hidden; transform: scale(1.04); filter: blur(10px); } }
 @media (prefers-reduced-motion: reduce) { .intro { display: none !important; } }
@@ -729,8 +729,8 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     </div>
   </div>
   <h2 class="intro__title">
-    <span class="w" style="animation-delay:.55s">До</span> <span class="w" style="animation-delay:.62s">какого</span> <span class="w" style="animation-delay:.69s">возраста</span> <span class="w" style="animation-delay:.76s">детям</span>
-    <span class="w em" style="animation-delay:.88s">закрывают</span> <span class="w em" style="animation-delay:.95s">соцсети</span> <span class="w" style="animation-delay:1.04s">в</span> <span class="w" style="animation-delay:1.10s">мире</span>
+    <span class="w" style="animation-delay:.55s">Узнаём,</span> <span class="w" style="animation-delay:.64s">где</span> <span class="w" style="animation-delay:.72s">в</span> <span class="w" style="animation-delay:.80s">мире</span>
+    <span class="w em" style="animation-delay:.92s">запрещают</span> <span class="w em" style="animation-delay:1.00s">соцсети</span> <span class="w" style="animation-delay:1.10s">детям?</span>
   </h2>
   <div class="intro__ramp" aria-hidden="true">
     <i style="background:var(--age-13);animation-delay:1.15s"></i>
@@ -1726,7 +1726,7 @@ if(!reduceMotion){
   function done(){ if(intro && intro.parentNode) intro.parentNode.removeChild(intro); }
   var skip=intro.querySelector('.intro__skip');
   if(skip) skip.addEventListener('click',function(){ intro.classList.add('intro--skip'); setTimeout(done,440); });
-  setTimeout(done,4150);
+  setTimeout(done,4900);
 })();
 </script>
 </body>
