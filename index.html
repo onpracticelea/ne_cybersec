@@ -522,6 +522,16 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .d-voices__more { font-family: var(--mono); font-size: 0.76rem; color: var(--ink-3); text-decoration: none; padding: 0.4rem 0; transition: color .2s; }
 .d-voices__more:hover { color: var(--ink); }
 
+.drawer__law { display: flex; align-items: center; gap: 0.5rem; margin: 0.2rem 0 0.2rem; font-family: var(--mono); font-size: 0.8rem; color: var(--age-14); text-decoration: none; border: 1px solid var(--line); border-radius: 10px; padding: 0.6rem 0.8rem; transition: border-color .2s, background .2s; }
+.drawer__law::before { content: "§"; font-weight: 700; opacity: 0.8; }
+.drawer__law:hover { border-color: var(--age-14); background: var(--surface); }
+.d-media { margin-top: 1.4rem; padding: 0.95rem 1.05rem; border: 1px solid var(--line-soft); border-radius: 12px; background: var(--surface-2); }
+.d-media__t { font-family: var(--mono); font-size: 0.66rem; color: var(--ink-3); letter-spacing: 0.03em; margin-bottom: 0.45rem; }
+.d-media__o { font-weight: 600; color: var(--ink); font-size: 0.86rem; margin-bottom: 0.35rem; }
+.d-media p { color: var(--ink-2); font-size: 0.88rem; line-height: 1.5; text-wrap: pretty; margin: 0; }
+.d-media a { display: inline-block; margin-top: 0.55rem; font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3); text-decoration: none; border-bottom: 1px solid var(--line); transition: color .2s; }
+.d-media a:hover { color: var(--ink); }
+
 /* ============================================================
    MID-PAGE PROMO BANNER
    ============================================================ */
@@ -1150,7 +1160,9 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
       <dt>Год</dt><dd id="d-year"></dd>
     </dl>
     <p class="drawer__desc" id="d-desc"></p>
+    <a class="drawer__law" id="d-law" target="_blank" rel="noopener" hidden></a>
     <div class="d-voices" id="d-voices" hidden></div>
+    <div class="d-media" id="d-media" hidden></div>
     <a class="drawer__src" id="d-src" target="_blank" rel="noopener">Источник ↗</a>
     <p class="drawer__hint">Цвет соответствует возрастному порогу на карте.</p>
   </div>
@@ -1344,6 +1356,26 @@ const QUOTES = [
   {author:'Солли Малатси', role:'министр связи и цифровых технологий ЮАР', country:'South Africa', stance:'critic', q:'Всегда есть соблазн при любой проблеме сказать: «давайте введём запреты». Но без достаточных механизмов мы получим лишь косметические меры.', src:'https://www.ewn.co.za/2026/02/10/minister-malatsi-weighs-online-safety-guardrails-for-sa-as-global-under-16-social-media-bans-gather-pace/', srcName:'EWN'},
   {author:'Евгений Кочетов', role:'вице-министр культуры и информации Казахстана', country:'Kazakhstan', stance:'official', q:'Норма о том, что детям до 16 лет будет ограничена регистрация. Механизмы не оговорены… В Парламент этот законопроект ещё не поступил.', src:'https://tengrinews.kz/kazakhstan_news/kazahstane-vvedut-zapret-sotsseti-detyam-16-let-novyie-599666/', srcName:'Tengrinews'},
   {author:'Лайло Файзимуродова', role:'Нацагентство соцзащиты Узбекистана', country:'Uzbekistan', stance:'critic', q:'Я против запрета использования социальных сетей детьми и считаю такую меру радикальной и неуместной.', src:'https://www.gazeta.uz/ru/2026/02/02/social-networks-and-children/', srcName:'Gazeta.uz'},
+
+  // — голоса граждан (расширенный ресёрч; формулировки — по публикациям СМИ) —
+  {author:'Нгуен Тху Хуен', role:'мать девочки-подростка, Ханой', country:'Vietnam', stance:'support', q:'Она зависима от соцсетей, не может сосредоточиться на учёбе, меньше общается с семьёй. Её мозг привык к коротким видео.', src:'https://www.thestar.com.my/aseanplus/aseanplus-news/2026/04/17/social-media-curbs-for-children-spark-debate-in-vietnam', srcName:'The Star'},
+  {author:'Со Мин-джун', role:'школьник, 18 лет', country:'South Korea', stance:'critic', q:'Вместо того чтобы просто отбирать телефоны, сначала стоило бы научить учеников, чем заняться без них.', src:'https://www.koreaherald.com/article/10563208', srcName:'Korea Herald'},
+  {author:'Сютаро Кихара', role:'студент-юрист, 22 года', country:'Japan', stance:'critic', q:'Сейчас мы делаем всё — учёбу, хобби, общение — через один смартфон, поэтому такое постановление довольно бессмысленно для молодёжи.', src:'https://www.theregister.com/2025/09/24/japan_toyoake_smartphone_limitation_ordinance/', srcName:'The Register'},
+  {author:'Ученик выпускного класса', role:'школьник, Венгрия', country:'Hungary', stance:'critic', q:'Нам нужно работать над выпускным видео, но так мы не можем ни фотографировать, ни снимать. У нас почти не останется воспоминаний об этом годе.', src:'https://eduline.hu/kozoktatas/20241004_telefontilalom_iskola_diakvelemenyek', srcName:'Eduline'},
+  {author:'«Нова» (имя изменено)', role:'ученица, 14 лет', country:'Sweden', stance:'critic', q:'Каким бы строгим ни был запрет, мы всегда найдём способ его обойти. Все правда находят способ не сдавать телефон.', src:'https://www.svt.se/nyheter/inrikes/sa-kommer-elever-runt-mobilforbudet-gommer-i-bhn', srcName:'SVT'},
+  {author:'Микаэла Кайл Касино', role:'студентка, 24 года', country:'Philippines', stance:'critic', q:'Не думаю, что нужно запрещать подросткам соцсети. При ответственном использовании они дают возможности самовыражения, общения и цифровой грамотности.', src:'https://www.sunstar.com.ph/cebu/right-or-restrictive-social-media-ban-on-minors', srcName:'SunStar'},
+  {author:'Хосе Эрнесто', role:'ученик средней школы, Керетаро', country:'Mexico', stance:'child', q:'Кому-то из одноклассников это не нравится, кому-то нормально. Мне всё равно: телефон нужен только чтобы предупредить родителей.', src:'https://www.eluniversal.com.mx/estados/apagan-celulares-en-escuelas-de-queretaro-ven-mejor-convivencia/', srcName:'El Universal'},
+  {author:'Лаура Байзакова', role:'мама семиклассника', country:'Kazakhstan', stance:'critic', q:'Сегодня было землетрясение, и первым делом я звонила ребёнку. Я против, чтобы у детей забирали телефоны — они должны быть доступны в любой момент.', src:'https://orda.kz/roditeli-vystupili-protiv-polnogo-zapreta-smartfonov-v-shkolah-kazahstane-411866/', srcName:'Orda.kz'},
+  {author:'Эсмеральда Плори', role:'студентка, 21 год, Тирана', country:'Albania', stance:'critic', q:'Спасибо правительству: благодаря ему 88% албанцев узнали, что такое VPN и как им пользоваться. Нет худа без добра.', src:'https://www.france24.com/en/live-news/20260311-albania-tiktok-ban-violated-free-speech-court-rules', srcName:'France24 / AFP'},
+  {author:'Ливи', role:'школьница, 14 лет, Нес-Циона', country:'Israel', stance:'child', q:'Не представляю, как это сработает. Вряд ли кто-то отнесётся серьёзно — будут пользоваться тайком. Это реально глупо.', src:'https://www.ynet.co.il/news/article/sjddywpyze', srcName:'Ynet'},
+  {author:'Танчанок Сэнгкоситтхада', role:'ученица, 13 лет, Бангкок', country:'Thailand', stance:'child', q:'Младшим в школе хорошо без телефонов. Но у старших должно быть право ими пользоваться. Главное — научиться разумно балансировать.', src:'https://www.bangkokpost.com/thailand/special-reports/3173613/social-media-ban-for-kids', srcName:'Bangkok Post'},
+  {author:'Бернардета Войтович', role:'мать школьника (по образованию учитель)', country:'Poland', stance:'critic', q:'Звучит прекрасно, но запрет мало что изменит: законодатели не дали школам никаких инструментов и денег, чтобы его реально исполнять.', src:'https://www.edunews.pl/badania-i-debaty/opinie/7397-telefony-najpierw-edukujmy-rodzicow', srcName:'Edunews.pl'},
+  {author:'Школьница', role:'ученица, Австрия', country:'Austria', stance:'child', q:'Хочу проверить, насколько я продуктивна, когда не смотрю постоянно в телефон.', src:'https://www.heute.at/s/handyverbot-an-schulen-erste-bilanz-und-erfahrungen-120138516', srcName:'Heute.at'},
+  {author:'Клайв Бергманн', role:'родитель школьника, Чехия', country:'Czechia', stance:'support', q:'По нашему горькому опыту, телефон в школьном рюкзаке — это шаг до того, чтобы тайком улизнуть в туалет ради переписки и постов в соцсетях.', src:'https://www.expats.cz/czech-news/article/expat-parents-and-teachers-weigh-in-on-czech-school-s-phone-policies', srcName:'Expats.cz'},
+  {author:'Ученица 8 класса, Тегеран', role:'автор школьной петиции', country:'Iran', stance:'child', q:'Во всех странах приносить телефон на урок ученикам разрешено, и это помогает учёбе.', src:'https://www.asriran.com/fa/news/1090404', srcName:'Asr-e Iran'},
+  {author:'Филипп Вампфлер', role:'учитель старших классов, эксперт по цифре', country:'Switzerland', stance:'critic', q:'Запрет — это быстрое и простое решение, которое позволяет уйти от более сложной проблемы.', src:'https://www.swissinfo.ch/eng/education/phone-bans-in-schools-why-swiss-teachers-are-sceptical/91358723', srcName:'swissinfo'},
+  {author:'Тала Абдулрахман', role:'ученица 9 класса, 15 лет', country:'Saudi Arabia', stance:'child', q:'Некоторые одноклассницы злые и любят высмеивать других. Если нельзя предотвратить травлю — пусть хотя бы не нарушают нашу частную жизнь.', src:'https://www.arabnews.com/node/1920591/saudi-arabia', srcName:'Arab News'},
+  {author:'Леонард', role:'ученик лицея, 16 лет, Париж', country:'France', stance:'critic', q:'Признаюсь, если бы это меня касалось, меня бы это немного разозлило. Эта мера наверняка достанет немало молодёжи.', src:'https://www.franceinfo.fr/internet/reseaux-sociaux/temoignages-interdire-les-reseaux-sociaux-aux-moins-de-15-ans-on-a-demande-a-des-adolescents-ce-qu-ils-en-pensaient_7716667.html', srcName:'France Info'},
 ];
 
 const COUNTRIES = [
@@ -1502,6 +1534,64 @@ const COUNTRIES = [
 ];
 
 const byKey = new Map(COUNTRIES.map(c => [c.key, c]));
+
+// Ссылки на официальные законы/первоисточники по странам (расширенный ресёрч)
+const LAWLINKS = {
+  'Vietnam':{n:'Указ 147/2024/NĐ-CP',u:'https://www.qtsc.com.vn/uploads/files/2024/12/30/147_2024_ND-CP_636187-eng.pdf'},
+  'Taiwan':{n:'Закон о защите прав детей и подростков (ст. 43)',u:'https://law.moj.gov.tw/ENG/LawClass/LawAll.aspx?pcode=D0050001'},
+  'South Korea':{n:'Запрет смартфонов в школах (поправки, 2025)',u:'https://www.koreaherald.com/article/10563208'},
+  'Japan':{n:'Проект возрастной верификации / постановление Тоёакэ',u:'https://www.biometricupdate.com/202604/japan-moves-toward-age-verification-for-social-media-filters-and-risk-labels'},
+  'Singapore':{n:'Кодекс онлайн-безопасности для магазинов приложений (IMDA)',u:'https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches/press-releases/2025/online-safety-code-of-practice-for-app-distribution-services'},
+  'Hungary':{n:'Постановление №245/2024',u:'https://net.jogtar.hu/jogszabaly?docid=a2400245.kor'},
+  'Sweden':{n:'Prop. 2025/26:193 (поправки к Закону об образовании)',u:'https://www.regeringen.se/rattsliga-dokument/proposition/2026/03/prop.-202526193'},
+  'Philippines':{n:'Законопроект Палаты № 8193',u:'https://docs.congress.hrep.online/legisdocs/basic_20/HB08193.pdf'},
+  'Mexico':{n:'Реформа Закона об образовании Мехико (2026)',u:'https://www.congresocdmx.gob.mx/comsoc-aprueban-regulacion-uso-celulares-primarias-y-secundarias-capitalinas-7517-1.html'},
+  'Kazakhstan':{n:'Закон РК (статус педагога / защита прав ребёнка)',u:'https://kazpravda.kz/n/zakon-respubliki-kazahstan-6o/'},
+  'Argentina':{n:'Закон провинции Буэнос-Айрес №15.534',u:'https://legislativa.senado-ba.gov.ar/Ley.aspx?ley=21229'},
+  'Albania':{n:'Решение Совмина №151 (TikTok, 2025)',u:'https://qbz.gov.al/'},
+  'Austria':{n:'Постановление BGBl. II №80/2025',u:'https://ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2025_II_80/BGBLA_2025_II_80.html'},
+  'Israel':{n:'Политика Минобразования (телефоны в школах)',u:'https://www.gov.il/he/pages/use-mobiles-schools'},
+  'Uzbekistan':{n:'Постановление КМ №139',u:'https://lex.uz/docs/2013803'},
+  'Thailand':{n:'Минобразования: разъяснение (школы решают сами)',u:'https://www.moe.go.th/'},
+  'Poland':{n:'Проект закона о телефонах в школах (МЕН, 2026)',u:'https://www.gov.pl/web/edukacja/rada-ministrow-przyjela-projekt-ustawy-dotyczacy-korzystania-z-telefonow-komorkowych-w-szkolach'},
+  'Netherlands':{n:'Нац. соглашение о запрете телефонов в классах',u:'https://eurydice.eacea.ec.europa.eu/news/netherlands-ban-mobile-phones-classroom'},
+  'Finland':{n:'Поправка к Закону об образовании (HE 212/2024)',u:'https://valtioneuvosto.fi/en/-/1410845/restrictions-to-be-placed-on-the-use-of-phones-and-mobile-devices-in-schools'},
+  'Ireland':{n:'Кодекс онлайн-безопасности (Coimisiún na Meán)',u:'https://www.cnam.ie/coimisiun-na-mean-adopts-final-online-safety-code/'},
+  'Portugal':{n:'Законопроект о доступе к соцсетям до 16 (2026)',u:'https://www.biometricupdate.com/202602/portugal-bringing-in-age-checks-to-restrict-social-media-for-teens-and-children'},
+  'Romania':{n:'Закон о цифровом совершеннолетии (Сенат, 2025)',u:'https://www.romania-insider.com/romania-close-adopting-digital-adulthood-law-2025'},
+  'South Africa':{n:'Минбазового образования ЮАР (нац. закона нет)',u:'https://www.education.gov.za/'},
+  'Czechia':{n:'Методика МШМТ по телефонам в школах (2026)',u:'https://msmt.gov.cz/msmt-vydalo-metodiku-k-pouzivani-mobilu-ve-skolach'},
+  'India':{n:'Закон DPDP 2023 + Правила 2025',u:'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2190655'},
+  'Iran':{n:'Исполнительный регламент школ (2021)',u:'https://www.sce.ir/'},
+  'Switzerland':{n:'Motion 26.3074 (ограничение смартфонов до 12 лет)',u:'https://www.parlament.ch/fr/ratsbetrieb/suche-curia-vista/geschaeft?AffairId=20263074'},
+  'Saudi Arabia':{n:'PDPL + Политика SDAIA о данных детей',u:'https://dgp.sdaia.gov.sa/wps/portal/pdp/home'},
+  'France':{n:'Закон №2023-566 (цифровое совершеннолетие 15 лет)',u:'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047799533'},
+};
+
+// Позиция местных СМИ по вопросу запрета (характеристика редакционной линии, не дословная цитата)
+const MEDIA = {
+  'Vietnam':{o:'CBS News',t:'Указ 147 критикуют как удар по свободе слова: требования верификации и удаления контента усиливают цензуру.',u:'https://www.cbsnews.com/news/vietnam-decree-147-social-media-free-speech-crackdown/'},
+  'South Korea':{o:'The Korea Times',t:'Сеул сознательно не запрещает подросткам соцсети: после провала «закона об отключении» 2011 — ставка на проверку возраста, а не тотальный запрет.',u:'https://www.koreatimes.co.kr/southkorea/society/20260407/why-seoul-isnt-banning-teenagers-from-social-media'},
+  'Japan':{o:'The Japan Times',t:'Лимиты экранного времени бессмысленны, если заканчиваются у школьных ворот: проблема в семье, а не только в школе.',u:'https://www.japantimes.co.jp/commentary/2026/04/17/japan/parent-problem-and-smartphones/'},
+  'Hungary':{o:'444 / TASZ',t:'Запрет телефонов в школах абсурден: школа вправе запрещать лишь предметы, не нужные для учёбы, а телефон бывает нужен — например, для системы «Крета».',u:'https://ataszjelenti.444.hu/2024/09/05/motozas-into-csontvaztelefon-az-iskolai-mobiltilalom-abszurd-de-fontos-kerdesei'},
+  'Sweden':{o:'Uppsala Nya Tidning',t:'Всеобщий запрет стоит изучить — это хорошо. Но пока взрослые ставят свои проблемы выше интересов учеников, ничего не улучшится.',u:'https://www.unt.se/ledare/artikel/totalt-mobilforbud-i-skolan-ar-bra-aven-om-det-blir-brak/r4zv491l'},
+  'Philippines':{o:'Philippine Daily Inquirer',t:'Проверка возраста — хорошее начало, но государство должно заставить платформы отвечать и убрать дизайн, удерживающий внимание и данные детей.',u:'https://opinion.inquirer.net/191442/making-social-media-safe-for-kids'},
+  'Kazakhstan':{o:'Inbusiness.kz',t:'Штрафы родителям за телефоны детей на уроках указывают не на решение проблемы, а на бессилие взрослых.',u:'https://inbusiness.kz/ru/news/pochemu-zapret-smartfonov-v-kazakhstanskikh-shkolakh-bessilie-vzroslykh-69896'},
+  'Albania':{o:'Citizens.al',t:'Вместо решения структурных проблем школ премьер предложил блокировку TikTok — популистская мера, ущемляющая свободу слова.',u:'https://citizens.al/2024/12/23/mbyllja-e-tik-tok-a-eshte-kjo-zgjidhja/'},
+  'Austria':{o:'Wiener Zeitung',t:'Когда речь о поколении Z, у всех есть мнение, но голос самих подростков тонет — решать должны не только политики, но и молодёжь.',u:'https://www.wienerzeitung.at/a/social-media-verbot-ein-gesetz-viele-meinungen'},
+  'Israel':{o:'Ynet',t:'Именно потому, что проблема реальна, тотальный запрет — слабое педагогическое решение; это скорее моральная паника, чем образовательная политика.',u:'https://www.ynet.co.il/news/article/rkamzq00kme'},
+  'Uzbekistan':{o:'Gazeta.uz',t:'Полный запрет соцсетей — радикальная мера: его легко обойти, а в соцсетях есть и полезное; нужен комплексный подход.',u:'https://www.gazeta.uz/ru/2026/02/02/social-networks-and-children/'},
+  'Poland':{o:'Krytyka Polityczna',t:'Не смартфоны опасны для учеников — настоящая угроза в бездействии Министерства образования.',u:'https://krytykapolityczna.pl/kraj/to-nie-smartfony-sa-grozne-dla-uczniow-prawdziwym-zagrozeniem-jest-lenistwo-men/'},
+  'Netherlands':{o:'NL Times',t:'Спустя год после запрета телефонов в классах школы отмечают: ученики стали общительнее и меньше отвлекаются.',u:'https://nltimes.nl/2025/03/04/kids-social-schools-report-one-year-phone-ban-secondary-schools'},
+  'Ireland':{o:'The Irish Times',t:'Правительства переходят от увещеваний к требованиям: между детьми и порнографией должно стоять что-то надёжнее галочки.',u:'https://www.irishtimes.com/media/2025/08/12/online-pornography-age-verification-is-en-route-but-the-devils-in-the-detail/'},
+  'Portugal':{o:'Renascença',t:'Есть дети, которые не могут «отключиться» от соцсетей; парламент усиливает регулирование этих пространств — первый шаг сделан.',u:'https://rr.pt/artigo/explicador-renascenca/2026/02/13/redes-sociais-proibidas-a-menores-de-16-anos-portugal-prepara-nova-lei/459438/'},
+  'South Africa':{o:'TechCentral',t:'При строгом применении проверка возраста, призванная защитить детей, может подтолкнуть нас к менее свободному интернету.',u:'https://techcentral.co.za/the-hidden-cost-of-social-media-age-bans-is-everyones-privacy/282021/'},
+  'Czechia':{o:'INFO.cz',t:'Если хотим научить детей здоровому отношению к технологиям, придётся начать с себя: школьный устав не заменит примера родителей.',u:'https://www.info.cz/zpravodajstvi-a-komentare/zakaz-mobilu-ve-skolach-babis-plaga-deti-socialni-site'},
+  'Iran':{o:'Zoomit',t:'В Иране даже подписи 40 тысяч школьников не изменили ограничительную политику в классах — телефоны остаются под контролем школы.',u:'https://www.asriran.com/fa/news/1090404'},
+  'Switzerland':{o:'St. Galler Tagblatt',t:'Первый крупный кантон уже ввёл запрет смартфонов — чего ещё ждут остальные?',u:'https://www.tagblatt.ch/leben/schulen-erster-grosser-kanton-macht-es-vor-fuenf-gruende-warum-es-hoechste-zeit-fuer-ein-smartphone-verbot-ist-ld.2779726'},
+  'Saudi Arabia':{o:'Arab News',t:'Детство в цифровую эпоху под угрозой: соцсети формируют развитие и эмоции детей, но всё чаще превращаются в цифровой ящик Пандоры.',u:'https://www.arabnews.com/node/2634113'},
+  'France':{o:'Lexbase (мнение)',t:'Запретить соцсети детям до 15 — Франция прокладывает амбициозный путь: подход оценивается как смелый и образцовый.',u:'https://www.lexbase.fr/article-juridique/131471185-point-de-vue-interdire-les-reseaux-sociaux-aux-moins-de-15-ans-la-france-trace-une-voie-ambitieuse'},
+};
 
 /* ---------------- HERO STATS ---------------- */
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1759,7 +1849,11 @@ function openDrawer(key){
   document.getElementById('d-regime').textContent=REGIME[c.regime];
   document.getElementById('d-year').textContent=c.year;
   document.getElementById('d-desc').textContent=c.desc;
+  const lawEl=document.getElementById('d-law'), law=LAWLINKS[key];
+  if(law){ lawEl.hidden=false; lawEl.href=law.u; lawEl.textContent='Закон: '+law.n+' ↗'; } else { lawEl.hidden=true; }
   renderCountryVoices(c);
+  const medEl=document.getElementById('d-media'), med=MEDIA[key];
+  if(med){ medEl.hidden=false; medEl.innerHTML=`<div class="d-media__t">ПОЗИЦИЯ СМИ</div><div class="d-media__o">${esc(med.o)}</div><p>${esc(med.t)}</p><a href="${med.u}" target="_blank" rel="noopener">Читать ↗</a>`; } else { medEl.hidden=true; medEl.innerHTML=''; }
   const src=document.getElementById('d-src');
   src.href=c.src; src.textContent=`Источник: ${c.srcName} ↗`;
   drawer.removeAttribute('hidden');
