@@ -9,6 +9,20 @@
 <!-- Telegram Mini App SDK (загружается только внутри Telegram; в обычном браузере просто игнорируется) -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+<!-- Решение об интро принимается синхронно, до первой отрисовки: без JS / при reduced-motion / при повторном визите за сессию — интро не показывается, контент виден сразу -->
+<script>
+(function(){
+  try{
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var seen = false; try{ seen = sessionStorage.getItem('nc_intro')==='1'; }catch(e){}
+    if(!reduce && !seen){
+      document.documentElement.classList.add('intro-on');
+      try{ sessionStorage.setItem('nc_intro','1'); }catch(e){}
+    }
+  }catch(e){}
+})();
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap&subset=cyrillic,cyrillic-ext,latin" rel="stylesheet" />
@@ -613,10 +627,90 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .skip { position: absolute; left: -999px; top: 0; }
 .skip:focus { left: 1rem; top: 1rem; z-index: 100; background: var(--surface-2); padding: 0.6rem 1rem; border-radius: 8px; color: var(--ink); }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* ============================================================
+   INTRO ANIMATION (plays once per session; off without JS / reduced-motion)
+   ============================================================ */
+.intro {
+  position: fixed; inset: 0; z-index: 200;
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  gap: clamp(1.1rem, 3vw, 1.8rem); padding: 2rem; text-align: center;
+  background: radial-gradient(120% 90% at 50% 34%, oklch(0.205 0.03 264), var(--bg-deep));
+}
+html.intro-on .intro { display: flex; animation: introOut 0.85s var(--ease-expo) 2.35s forwards; }
+.intro.intro--skip { animation: introOut 0.42s var(--ease-expo) forwards !important; }
+@keyframes introOut { to { opacity: 0; visibility: hidden; transform: scale(1.04); filter: blur(10px); } }
+@media (prefers-reduced-motion: reduce) { .intro { display: none !important; } }
+
+.intro__brand { display: flex; align-items: center; gap: 0.55rem; font-family: var(--mono); font-size: 0.8rem; color: var(--ink-3); opacity: 0; }
+.intro__brand img { width: 24px; height: 24px; border-radius: 6px; object-fit: cover; }
+html.intro-on .intro__brand { animation: introFade 0.6s ease 0.1s forwards; }
+
+.intro__viz { position: relative; display: grid; place-items: center; }
+.intro__globe { width: clamp(130px, 28vw, 210px); height: auto; }
+.intro__globe :is(circle, ellipse, line) { fill: none; stroke: var(--grid); stroke-width: 1; opacity: 0; }
+html.intro-on .intro__globe :is(circle, ellipse, line) {
+  stroke-dasharray: 660; stroke-dashoffset: 660;
+  animation: introDraw 1.35s var(--ease-quint) forwards, introStroke 0.5s ease forwards;
+}
+@keyframes introDraw { to { stroke-dashoffset: 0; } }
+@keyframes introStroke { to { opacity: 0.55; } }
+
+.intro__dot { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--c); box-shadow: 0 0 14px var(--c); transform: scale(0); }
+html.intro-on .intro__dot { animation: introPop 0.55s var(--ease-quint) forwards; }
+@keyframes introPop { 0% { transform: scale(0); } 60% { transform: scale(1.25); } 100% { transform: scale(1); } }
+
+.intro__title { font-size: clamp(1.5rem, 5.2vw, 3.2rem); font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1.06; max-width: 18ch; text-wrap: balance; }
+.intro__title .w { display: inline-block; opacity: 0; filter: blur(8px); transform: translateY(14px); }
+html.intro-on .intro__title .w { animation: introWord 0.7s var(--ease-quint) forwards; }
+@keyframes introWord { to { opacity: 1; filter: blur(0); transform: none; } }
+.intro__title .em { color: var(--age-15); }
+
+.intro__ramp { display: flex; gap: 4px; }
+.intro__ramp i { width: clamp(26px, 6vw, 36px); height: 7px; border-radius: 3px; transform: scaleX(0); transform-origin: left; }
+html.intro-on .intro__ramp i { animation: introBar 0.5s var(--ease-quint) forwards; }
+@keyframes introBar { to { transform: scaleX(1); } }
+
+.intro__skip { position: absolute; bottom: clamp(1.2rem, 4vw, 2.2rem); font-family: var(--mono); font-size: 0.78rem; color: var(--ink-3); border: 1px solid var(--line); border-radius: 999px; padding: 0.45rem 1rem; opacity: 0; transition: color .2s, border-color .2s; }
+html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
+.intro__skip:hover { color: var(--ink); border-color: var(--ink-3); }
+@keyframes introFade { to { opacity: 1; } }
 </style>
 </head>
 <body>
 <a href="#ranking" class="skip">Перейти к таблице данных</a>
+
+<!-- INTRO ANIMATION -->
+<div class="intro" aria-hidden="true">
+  <div class="intro__brand"><img src="logo.jpg" alt="" onerror="this.remove()">@ne_cybersec</div>
+  <div class="intro__viz">
+    <svg class="intro__globe" viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="84" style="animation-delay:.15s,.15s"/>
+      <ellipse cx="100" cy="100" rx="84" ry="32" style="animation-delay:.30s,.30s"/>
+      <ellipse cx="100" cy="100" rx="84" ry="62" style="animation-delay:.42s,.42s"/>
+      <ellipse cx="100" cy="100" rx="32" ry="84" style="animation-delay:.54s,.54s"/>
+      <ellipse cx="100" cy="100" rx="62" ry="84" style="animation-delay:.66s,.66s"/>
+      <line x1="16" y1="100" x2="184" y2="100" style="animation-delay:.24s,.24s"/>
+      <line x1="100" y1="16" x2="100" y2="184" style="animation-delay:.24s,.24s"/>
+    </svg>
+    <span class="intro__dot" style="--c:var(--age-13); top:30%; left:26%; animation-delay:1.05s"></span>
+    <span class="intro__dot" style="--c:var(--age-15); top:22%; left:64%; animation-delay:1.18s"></span>
+    <span class="intro__dot" style="--c:var(--age-16); top:62%; left:70%; animation-delay:1.30s"></span>
+    <span class="intro__dot" style="--c:var(--age-18); top:68%; left:34%; animation-delay:1.42s"></span>
+  </div>
+  <h2 class="intro__title">
+    <span class="w" style="animation-delay:.55s">До</span> <span class="w" style="animation-delay:.62s">какого</span> <span class="w" style="animation-delay:.69s">возраста</span> <span class="w" style="animation-delay:.76s">детям</span>
+    <span class="w em" style="animation-delay:.88s">закрывают</span> <span class="w em" style="animation-delay:.95s">соцсети</span> <span class="w" style="animation-delay:1.04s">в</span> <span class="w" style="animation-delay:1.10s">мире</span>
+  </h2>
+  <div class="intro__ramp" aria-hidden="true">
+    <i style="background:var(--age-13);animation-delay:1.15s"></i>
+    <i style="background:var(--age-14);animation-delay:1.22s"></i>
+    <i style="background:var(--age-15);animation-delay:1.29s"></i>
+    <i style="background:var(--age-16);animation-delay:1.36s"></i>
+    <i style="background:var(--age-18);animation-delay:1.43s"></i>
+  </div>
+  <button class="intro__skip" type="button">Пропустить →</button>
+</div>
 
 <header class="topbar">
   <div class="wrap topbar__inner">
@@ -1584,6 +1678,19 @@ if(!reduceMotion){
 }else{
   document.querySelectorAll('.reveal').forEach(el=>el.classList.add('is-in'));
 }
+</script>
+
+<!-- Intro: пропуск и удаление из DOM (классический скрипт, без ожидания CDN) -->
+<script>
+(function(){
+  var intro=document.querySelector('.intro');
+  if(!intro) return;
+  if(!document.documentElement.classList.contains('intro-on')){ intro.remove(); return; }
+  function done(){ if(intro && intro.parentNode) intro.parentNode.removeChild(intro); }
+  var skip=intro.querySelector('.intro__skip');
+  if(skip) skip.addEventListener('click',function(){ intro.classList.add('intro--skip'); setTimeout(done,440); });
+  setTimeout(done,3300);
+})();
 </script>
 </body>
 </html>
