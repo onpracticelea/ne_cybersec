@@ -162,6 +162,9 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding-block: 0.85rem;
 }
+/* Прогресс чтения: тонкая полоса по нижнему краю липкого топбара */
+.readbar { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: transparent; pointer-events: none; z-index: 1; }
+.readbar__fill { display: block; height: 100%; width: 100%; transform: scaleX(0); transform-origin: left; background: var(--age-15); will-change: transform; }
 .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; text-decoration: none; transition: opacity 0.2s; }
 .brand:hover { opacity: 0.82; }
 .brand__mark {
@@ -178,6 +181,8 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 @media (max-width: 620px) { .topbar__meta { display: none; } }
 
 /* ---- Top nav (section anchors) ---- */
+.topnav-wrap { display: contents; }
+.topnav-cue { display: none; }
 .topnav { display: flex; align-items: center; gap: 0.15rem; min-width: 0; }
 .topnav a { position: relative; font-family: var(--mono); font-size: 0.8rem; color: var(--ink-3); text-decoration: none; padding: 0.42rem 0.72rem; border-radius: 9px; white-space: nowrap; transition: color 0.2s, background 0.2s, transform 0.14s var(--ease-quint); }
 .topnav a:hover { color: var(--ink); background: var(--surface-2); }
@@ -186,9 +191,26 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .topnav a.is-active { color: var(--ink); }
 .topnav a.is-active::after { transform: scaleX(1); }
 @media (max-width: 980px) {
-  .topnav { flex: 1 1 auto; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; margin-inline: 0.4rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8px, #000 calc(100% - 8px), transparent); mask-image: linear-gradient(90deg, transparent, #000 8px, #000 calc(100% - 8px), transparent); }
+  .topnav-wrap { display: flex; position: relative; flex: 1 1 auto; min-width: 0; align-items: center; margin-inline: 0.4rem; }
+  .topnav { flex: 1 1 auto; min-width: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6px, #000 calc(100% - 22px), transparent); mask-image: linear-gradient(90deg, transparent, #000 6px, #000 calc(100% - 22px), transparent); }
   .topnav::-webkit-scrollbar { display: none; }
+  .topnav-wrap[data-more="true"] .topnav-cue {
+    display: grid; place-content: center;
+    position: absolute; right: -2px; top: 50%; transform: translateY(-50%);
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    font-size: 1.05rem; line-height: 1; padding: 0 0 2px 1px;
+    box-shadow: -10px 0 14px -6px var(--bg);
+  }
+  .topnav-wrap[data-more="true"] .topnav-cue::before {
+    content: ""; position: absolute; inset: -4px; border-radius: 50%;
+    border: 1px solid var(--age-15); opacity: 0;
+  }
 }
+@media (max-width: 980px) and (prefers-reduced-motion: no-preference) {
+  .topnav-wrap[data-more="true"] .topnav-cue::before { animation: cuePulse 2s var(--ease-quint) infinite; }
+}
+@keyframes cuePulse { 0% { opacity: 0.5; transform: scale(0.85); } 70%,100% { opacity: 0; transform: scale(1.25); } }
 @media (max-width: 520px) { .brand span:last-child { display: none; } }
 
 /* anchor offset under sticky topbar */
@@ -371,6 +393,22 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .lkey .sw--reco { border: 1.5px dotted var(--neutral-reco); background: transparent; }
 .lkey .sw--disc { border: 1.5px dashed var(--status-discussion); background: color-mix(in oklch, var(--status-discussion) 18%, transparent); }
 .lkey .sw--noage { background: var(--no-age); }
+
+/* Мобайл: карта сразу под заголовком, фильтры — под ней и компактнее; легенда без дублей */
+@media (max-width: 660px) {
+  .mapsec .wrap { display: flex; flex-direction: column; }
+  .mapsec__head { order: 0; margin-bottom: 1rem; }
+  .mapsec__head p { font-size: 0.82rem; }
+  .mapframe { order: 1; }
+  .legend { order: 2; gap: 1rem; margin-top: 0.9rem; }
+  .legend .legend__block:nth-child(2) { display: none; } /* ключи статуса дублируют фильтры */
+  #filters { order: 3; margin-top: 1rem; }
+  #filters-regime { order: 4; }
+  .mapsec .controls { gap: 0.4rem; margin-bottom: 0.5rem; }
+  .mapsec .chip { font-size: 0.72rem; padding: 0.38rem 0.62rem; gap: 0.4rem; }
+  .mapsec .chip .swatch { width: 8px; height: 8px; }
+  .mapsec .filters__label { width: 100%; margin: 0 0 0.1rem; }
+}
 
 /* ============================================================
    DETAIL DRAWER
@@ -997,19 +1035,23 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
       <span class="brand__mark" aria-hidden="true"><img src="logo.jpg" alt="" loading="eager" onerror="this.remove()"></span>
       <span>@ne_cybersec</span>
     </a>
-    <nav class="topnav" aria-label="Разделы статьи">
-      <a href="#map">Карта</a>
-      <a href="#quotes">Цитаты</a>
-      <a href="#timeline">Хронология</a>
-      <a href="#russia">Россия</a>
-      <a href="#usa">США</a>
-      <a href="#ranking">Все страны</a>
-    </nav>
+    <div class="topnav-wrap">
+      <nav class="topnav" id="topnav" aria-label="Разделы статьи">
+        <a href="#map">Карта</a>
+        <a href="#quotes">Цитаты</a>
+        <a href="#timeline">Хронология</a>
+        <a href="#russia">Россия</a>
+        <a href="#usa">США</a>
+        <a href="#ranking">Все страны</a>
+      </nav>
+      <button class="topnav-cue" id="topnav-cue" type="button" aria-label="Прокрутить меню вправо" tabindex="-1">›</button>
+    </div>
     <div class="topbar__right">
       <div class="topbar__meta">данные на июнь&nbsp;2026 · <a href="#sources">источники</a></div>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Светлая / тёмная тема"><span class="theme-toggle__icon">☾</span></button>
     </div>
   </div>
+  <div class="readbar" aria-hidden="true"><span class="readbar__fill" id="readbar-fill"></span></div>
 </header>
 
 <main>
@@ -1018,8 +1060,8 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     <div class="wrap hero__grid">
       <div>
         <h1>До какого возраста детям <span class="em">закрывают соцсети</span> в мире</h1>
-        <p class="hero__intro">Изучение практики ограничений для детей в интернете в <b id="hero-n">99</b> странах мира. Попробуем рассмотреть международный опыт и понять — а необходимы ли ограничения в России? Становятся ли ограничения пользой для ребёнка?</p>
-        <p class="hero__dek">За два года мир развернулся к экранам спиной. От Австралии до Норвегии правительства устанавливают возрастной порог для социальных сетей и смартфонов. <b>Наведите на страну</b>, чтобы увидеть, с какого возраста и насколько строго.</p>
+        <p class="hero__intro">Практика ограничений для детей в интернете в <b id="hero-n">99</b> странах мира. Разбираем международный опыт, чтобы понять: нужны ли такие ограничения в России и идут ли они на пользу детям?</p>
+        <p class="hero__dek">За два года мир развернулся к экранам спиной. От Австралии до Норвегии правительства устанавливают возрастной порог для социальных сетей и смартфонов. <b>Нажмите на страну</b>, чтобы увидеть, с какого возраста и насколько строго.</p>
       </div>
       <div class="stats" aria-label="Ключевые цифры">
         <div class="stat stat--lead">
@@ -1112,7 +1154,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
           <div class="def__idx">01<span class="bar" style="background:var(--age-18)"></span></div>
           <div>
             <h3>Прямой запрет</h3>
-            <p>Завести аккаунт нельзя до определённого возраста — и согласие родителей не помогает. Платформа обязана не пускать ребёнка. <b>Австралия (16)</b> стала первой в мире в декабре 2025; следом — Малайзия, Индонезия, а в 2026 — <b>Турция</b> и <b>ОАЭ</b> (до 15).</p>
+            <p>Завести аккаунт нельзя до определённого возраста, и согласие родителей не помогает: платформа обязана не пускать ребёнка. <b>Австралия (16)</b> стала первой в мире в декабре 2025. Сейчас прямой запрет уже <b>принят в 6 странах</b> — следом Малайзия, Индонезия, Турция, ОАЭ (до 15) и Габон (первый в Африке). Ещё ряд стран его анонсировал: <b>Великобритания</b> (до 16, июнь 2026), Франция, Дания, Норвегия и др.</p>
           </div>
         </div>
         <div class="def reveal">
@@ -1896,8 +1938,8 @@ const COUNTRIES = [
   {key:"Greece", ru:"Греция", age:15, status:"proposed", regime:"ban", year:2026, scope:"Запрет «скролл-приложений» до 15",
     desc:"В апреле 2026 премьер Мицотакис анонсировал запрет ключевых соцсетей (TikTok, Instagram и др.) до 15 — с проверкой возраста через государственное приложение Kids Wallet.",
     src:"https://balkaninsight.com/2026/04/08/greece-to-ban-use-of-key-social-media-platforms-by-under-15s/bi/", srcName:"BalkanInsight"},
-  {key:"United Kingdom", ru:"Великобритания", age:16, status:"proposed", regime:"ban", year:2026, scope:"Запрет до 16 (консультации)",
-    desc:"Весной 2026 идут национальные консультации о запрете соцсетей до 16; меры ожидаются примерно к 2027. Отдельно с июля 2025 уже работает проверка возраста для контента 18+ по Online Safety Act.",
+  {key:"United Kingdom", ru:"Великобритания", age:16, status:"proposed", regime:"ban", year:2026, scope:"Запрет до 16 (анонсирован)",
+    desc:"15 июня 2026 правительство Стармера официально анонсировало запрет соцсетей (TikTok, Instagram, Snapchat, Facebook, X, YouTube — кроме YouTube Kids и мессенджеров) для детей до 16. Закон будет введён подзаконными нормами: их планируют принять до конца 2026, вступление в силу — около 2027. Отдельно с июля 2025 уже работает проверка возраста для контента 18+ по Online Safety Act.",
     src:"https://commonslibrary.parliament.uk/research-briefings/cbp-10468/", srcName:"UK Parliament"},
   {key:"Germany", ru:"Германия", age:14, status:"proposed", regime:"ban", year:2026, scope:"Обсуждение: 13–14",
     desc:"Правящая коалиция и экспертная комиссия (июнь 2026) обсуждают минимальный возраст 13 и запрет до 14. Законодательно пока ничего не принято.",
@@ -2808,6 +2850,42 @@ if(!reduceMotion){
   secs.forEach(s=>io.observe(s));
   // мгновенная подсветка по клику
   links.forEach(a=>a.addEventListener('click',()=>setActive(a.getAttribute('href').slice(1))));
+})();
+
+/* ---------------- READING PROGRESS BAR ---------------- */
+(function readProgress(){
+  const fill=document.getElementById('readbar-fill'); if(!fill) return;
+  let ticking=false;
+  function update(){
+    ticking=false;
+    const doc=document.documentElement;
+    const max=(doc.scrollHeight - doc.clientHeight);
+    const p=max>0 ? Math.min(1, Math.max(0, (window.scrollY||doc.scrollTop)/max)) : 0;
+    fill.style.transform='scaleX('+p.toFixed(4)+')';
+  }
+  function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll, {passive:true});
+  update();
+})();
+
+/* ---------------- TOP NAV: индикатор «есть ещё разделы» ---------------- */
+(function navCue(){
+  const wrap=document.querySelector('.topnav-wrap');
+  const nav=document.getElementById('topnav');
+  const cue=document.getElementById('topnav-cue');
+  if(!wrap||!nav||!cue) return;
+  function update(){
+    const more = nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 4;
+    wrap.setAttribute('data-more', more ? 'true' : 'false');
+  }
+  cue.addEventListener('click', ()=>{ nav.scrollBy({left: Math.round(nav.clientWidth*0.7), behavior:'smooth'}); });
+  nav.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update, {passive:true});
+  // ширина шрифта/контента может измениться после загрузки CDN-шрифтов
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(update);
+  setTimeout(update, 300);
+  update();
 })();
 </script>
 
