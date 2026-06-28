@@ -22,6 +22,10 @@
   }catch(e){}
 })();
 </script>
+<script>
+/* Тема: применяем сохранённую светлую тему до отрисовки (без мигания) */
+(function(){ try{ if(localStorage.getItem('nc_theme')==='light') document.documentElement.setAttribute('data-theme','light'); }catch(e){} })();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -196,8 +200,18 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
   line-height: 0.98;
 }
 .hero h1 .em { color: var(--age-15); }
-.hero__dek {
+.hero__intro {
   margin-top: 1.5rem;
+  font-size: clamp(1.05rem, 1.9vw, 1.32rem);
+  color: var(--ink);
+  max-width: 58ch;
+  line-height: 1.5;
+  text-wrap: pretty;
+  font-weight: 500;
+}
+.hero__intro b { color: var(--age-15); font-weight: 700; font-family: var(--mono); }
+.hero__dek {
+  margin-top: 1rem;
   font-size: clamp(1.02rem, 1.6vw, 1.22rem);
   color: var(--ink-2);
   max-width: 56ch;
@@ -416,7 +430,7 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 /* ============================================================
    RUSSIA DEEP-DIVE
    ============================================================ */
-.rusec { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.rusec { padding: clamp(1.4rem, 3vw, 2rem) 0 clamp(3rem, 7vw, 5.5rem); }
 .rusec__head { display: grid; grid-template-columns: auto 1fr; gap: clamp(1.5rem, 5vw, 3.5rem); align-items: center; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
 .rusec__big {
   font-family: var(--mono); font-weight: 700; line-height: 0.8;
@@ -455,6 +469,16 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .rutl a:hover { color: var(--ink); border-color: var(--status-discussion); }
 .runote { margin-top: clamp(2rem, 4vw, 3rem); padding: clamp(1.2rem, 3vw, 1.8rem); border: 1px solid var(--line); border-radius: 14px; background: color-mix(in oklch, var(--status-discussion) 9%, transparent); color: var(--ink); font-size: clamp(0.98rem, 1.6vw, 1.12rem); line-height: 1.5; text-wrap: pretty; }
 .runote b { font-weight: 600; }
+.ruverdict { margin-top: clamp(2rem, 4vw, 3rem); padding: clamp(1.4rem, 4vw, 2.2rem); border: 1px solid var(--status-discussion); border-radius: 16px; background: color-mix(in oklch, var(--status-discussion) 8%, transparent); }
+.ruverdict__q { font-weight: 700; color: var(--ink); font-size: clamp(1.05rem, 2.2vw, 1.4rem); line-height: 1.3; margin-bottom: 0.8rem; text-wrap: balance; }
+.ruverdict__a { color: var(--ink); font-size: clamp(1rem, 1.8vw, 1.18rem); margin-bottom: 1.1rem; }
+.ruverdict__a b { color: var(--status-discussion); }
+.ruverdict__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.7rem; }
+.ruverdict__list li { position: relative; padding-left: 1.4rem; color: var(--ink-2); font-size: 0.92rem; line-height: 1.55; text-wrap: pretty; }
+.ruverdict__list li::before { content: "—"; position: absolute; left: 0; color: var(--status-discussion); }
+.ruverdict__list b { color: var(--ink); font-weight: 600; }
+.ruverdict__list a { font-family: var(--mono); font-size: 0.76rem; color: var(--ink-3); text-decoration: none; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.ruverdict__list a:hover { color: var(--ink); }
 
 /* ============================================================
    QUOTE WALL (cytatnik)
@@ -535,7 +559,7 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 /* ============================================================
    MID-PAGE PROMO BANNER
    ============================================================ */
-.promo { padding-block: clamp(2rem, 5vw, 3.5rem); }
+.promo { padding: clamp(2rem, 5vw, 3.5rem) 0 0; }
 .promo a {
   display: flex; align-items: center; gap: clamp(1rem, 3vw, 2rem); text-decoration: none;
   padding: clamp(1.3rem, 4vw, 2.3rem); border: 1px solid var(--line); border-radius: 18px;
@@ -556,6 +580,15 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2.2rem; }
 .tags a { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-3); text-decoration: none; padding: 0.35rem 0.75rem; border: 1px solid var(--line-soft); border-radius: 999px; transition: color .2s, border-color .2s, background .2s; }
 .tags a:hover { color: var(--ink); border-color: var(--ink-3); background: var(--surface); }
+
+.farewell { display: flex; align-items: center; gap: clamp(1rem, 3vw, 1.8rem); text-decoration: none; margin: 0 0 0.5rem; padding: clamp(1.2rem, 3.5vw, 2rem); border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(120deg, oklch(0.23 0.04 30 / 0.5), oklch(0.21 0.03 255 / 0.4)); transition: border-color .25s, transform .25s var(--ease-quint); }
+.farewell:hover { border-color: var(--age-16); transform: translateY(-2px); }
+.farewell__logo { width: clamp(48px, 10vw, 72px); height: clamp(48px, 10vw, 72px); border-radius: 14px; object-fit: cover; flex: none; box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.15); }
+.farewell__txt { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+.farewell__name { font-family: var(--mono); font-weight: 700; font-size: clamp(1rem, 2.2vw, 1.3rem); color: var(--ink); }
+.farewell__msg { color: var(--ink-2); font-size: clamp(0.92rem, 1.6vw, 1.05rem); text-wrap: pretty; line-height: 1.45; }
+.farewell__cta { margin-left: auto; font-family: var(--mono); font-size: 0.78rem; color: var(--age-16); white-space: nowrap; }
+@media (max-width: 600px) { .farewell { flex-wrap: wrap; } .farewell__cta { margin-left: 0; width: 100%; } }
 
 /* ============================================================
    RUSSIA QUOTES BLOCK
@@ -693,6 +726,8 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .foot h4 { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3); letter-spacing: 0.03em; margin-bottom: 1rem; font-weight: 500; }
 .foot p { color: var(--ink-2); font-size: 0.9rem; max-width: 52ch; text-wrap: pretty; }
 .foot__note { color: var(--ink-3); font-size: 0.82rem; margin-top: 1rem; }
+.foot__stats { color: var(--ink); font-size: 0.96rem; line-height: 1.65; margin-bottom: 0.9rem; text-wrap: pretty; }
+.foot__stats b { font-family: var(--mono); color: var(--age-14); font-weight: 700; }
 .srclist { display: grid; gap: 0.5rem; }
 .srclist a { font-size: 0.82rem; color: var(--ink-2); text-decoration: none; display: flex; gap: 0.6rem; transition: color 0.2s; }
 .srclist a:hover { color: var(--ink); }
@@ -765,6 +800,50 @@ html.intro-on .intro__ramp i { animation: introBar 0.5s var(--ease-quint) forwar
 html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
 .intro__skip:hover { color: var(--ink); border-color: var(--ink-3); }
 @keyframes introFade { to { opacity: 1; } }
+
+/* ============================================================
+   THEME TOGGLE + LIGHT (DAY) MODE
+   ============================================================ */
+.topbar__right { display: flex; align-items: center; gap: 0.9rem; }
+.theme-toggle { width: 34px; height: 34px; flex: none; border-radius: 9px; border: 1px solid var(--line); color: var(--ink-2); display: grid; place-content: center; font-size: 0.95rem; line-height: 1; transition: border-color .2s, color .2s, background .2s; }
+.theme-toggle:hover { border-color: var(--ink-3); color: var(--ink); background: var(--surface); }
+
+:root[data-theme="light"] {
+  --bg: oklch(0.986 0.003 264);
+  --bg-deep: oklch(0.966 0.005 264);
+  --surface: oklch(1 0 0);
+  --surface-2: oklch(0.976 0.004 264);
+  --line: oklch(0.852 0.012 264);
+  --line-soft: oklch(0.916 0.008 264);
+  --ink: oklch(0.215 0.022 264);
+  --ink-2: oklch(0.380 0.020 264);
+  --ink-3: oklch(0.520 0.018 264);
+  --geo-land: oklch(0.900 0.008 264);
+  --geo-edge: oklch(0.986 0.003 264);
+  --sphere: oklch(0.955 0.006 264);
+  --grid: oklch(0.860 0.012 264);
+  --status-discussion: oklch(0.520 0.160 300);
+  --no-age: oklch(0.560 0.040 230);
+}
+:root[data-theme="light"] body::before { background: radial-gradient(120% 90% at 78% -10%, oklch(0.86 0.06 250 / 0.35), transparent 60%), radial-gradient(90% 80% at 0% 110%, oklch(0.90 0.05 30 / 0.28), transparent 55%); }
+:root[data-theme="light"] body::after { opacity: 0.4; background-image: radial-gradient(oklch(0.5 0.02 264 / 0.08) 1px, transparent 1px); }
+:root[data-theme="light"] .topbar { background: oklch(1 0 0 / 0.82); }
+:root[data-theme="light"] .mapframe { background: radial-gradient(140% 120% at 50% -20%, oklch(0.93 0.02 250 / 0.85), transparent 60%), var(--bg-deep); }
+:root[data-theme="light"] .tip { background: oklch(1 0 0 / 0.96); }
+:root[data-theme="light"] .zoomctl button { background: oklch(1 0 0 / 0.85); }
+:root[data-theme="light"] .qviewport { background: radial-gradient(140% 130% at 50% 0%, oklch(0.93 0.025 285 / 0.6), transparent 62%), var(--bg-deep); }
+:root[data-theme="light"] .intro { background: radial-gradient(120% 90% at 50% 34%, oklch(0.95 0.02 264), var(--bg-deep)); }
+:root[data-theme="light"] .promo a, :root[data-theme="light"] .farewell { background: linear-gradient(120deg, oklch(0.95 0.03 30 / 0.6), oklch(0.95 0.03 255 / 0.5)); }
+:root[data-theme="light"] .callout { background: linear-gradient(120deg, oklch(0.93 0.03 250 / 0.7), oklch(0.95 0.025 30 / 0.5)); }
+:root[data-theme="light"] .oped { background: linear-gradient(125deg, oklch(0.93 0.04 300 / 0.6), oklch(0.96 0.02 264 / 0.5)); }
+:root[data-theme="light"] .hero h1 .em, :root[data-theme="light"] .intro__title .em, :root[data-theme="light"] .hero__intro b { color: oklch(0.56 0.16 130); }
+:root[data-theme="light"] .stat__num.is-total { color: oklch(0.54 0.12 182); }
+:root[data-theme="light"] .stat__num.is-prop { color: oklch(0.62 0.16 60); }
+:root[data-theme="light"] .stat__num.is-ban { color: oklch(0.56 0.19 26); }
+:root[data-theme="light"] .foot__stats b, :root[data-theme="light"] .ruq__head .n { color: oklch(0.50 0.12 182); }
+:root[data-theme="light"] .drawer { box-shadow: -30px 0 80px -30px oklch(0 0 0 / 0.22); }
+:root[data-theme="light"] .mapframe, :root[data-theme="light"] .qviewport { box-shadow: 0 24px 60px -40px oklch(0 0 0 / 0.25), inset 0 1px 0 oklch(1 0 0 / 0.5); }
+:root[data-theme="light"] ::selection { background: oklch(0.80 0.15 62 / 0.30); color: var(--ink); }
 </style>
 </head>
 <body>
@@ -791,7 +870,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     </div>
   </div>
   <h2 class="intro__title">
-    <span class="w" style="animation-delay:.55s">Узнаём,</span> <span class="w" style="animation-delay:.64s">где</span> <span class="w" style="animation-delay:.72s">в</span> <span class="w" style="animation-delay:.80s">мире</span>
+    <span class="w" style="animation-delay:.55s">Узна́ем,</span> <span class="w" style="animation-delay:.64s">где</span> <span class="w" style="animation-delay:.72s">в</span> <span class="w" style="animation-delay:.80s">мире</span>
     <span class="w em" style="animation-delay:.92s">запрещают</span> <span class="w em" style="animation-delay:1.00s">соцсети</span> <span class="w" style="animation-delay:1.10s">детям?</span>
   </h2>
   <div class="intro__ramp" aria-hidden="true">
@@ -811,7 +890,10 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
       <span class="brand__mark" aria-hidden="true"><img src="logo.jpg" alt="" loading="eager" onerror="this.remove()"></span>
       <span>@ne_cybersec</span>
     </a>
-    <div class="topbar__meta">данные на июнь&nbsp;2026 · <a href="#sources">источники</a></div>
+    <div class="topbar__right">
+      <div class="topbar__meta">данные на июнь&nbsp;2026 · <a href="#sources">источники</a></div>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Светлая / тёмная тема"><span class="theme-toggle__icon">☾</span></button>
+    </div>
   </div>
 </header>
 
@@ -821,6 +903,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     <div class="wrap hero__grid">
       <div>
         <h1>До какого возраста детям <span class="em">закрывают соцсети</span> в мире</h1>
+        <p class="hero__intro">Изучение практики ограничений для детей в интернете в <b id="hero-n">49</b> странах. Попробуем рассмотреть международный опыт и понять — а необходимы ли ограничения в России? Становятся ли ограничения пользой для ребёнка?</p>
         <p class="hero__dek">За два года мир развернулся к экранам спиной. От Австралии до Норвегии правительства устанавливают возрастной порог для социальных сетей и смартфонов. <b>Наведите на страну</b>, чтобы увидеть, с какого возраста и насколько строго.</p>
       </div>
       <div class="stats" aria-label="Ключевые цифры">
@@ -897,28 +980,35 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
       <div class="types__intro reveal">
         <span class="eyebrow">Как читать карту</span>
         <h2>«Запрет» означает разное</h2>
-        <p>За одинаковыми заголовками в новостях скрываются три очень разных механизма. Карта различает их — иначе сравнивать страны бессмысленно.</p>
+        <p>За одинаковыми заголовками в новостях скрываются <b>четыре</b> очень разных механизма. Карта различает их — иначе сравнивать страны бессмысленно.</p>
       </div>
       <div class="deflist">
         <div class="def reveal">
           <div class="def__idx">01<span class="bar" style="background:var(--age-18)"></span></div>
           <div>
             <h3>Прямой запрет</h3>
-            <p>Завести аккаунт нельзя до определённого возраста — и согласие родителей не помогает. Платформа обязана не пускать ребёнка. <b>Австралия (16)</b> стала первой в мире в декабре 2025; следом — Малайзия и Индонезия.</p>
+            <p>Завести аккаунт нельзя до определённого возраста — и согласие родителей не помогает. Платформа обязана не пускать ребёнка. <b>Австралия (16)</b> стала первой в мире в декабре 2025; следом — Малайзия, Индонезия, а в 2026 — <b>Турция</b> и <b>ОАЭ</b> (до 15).</p>
           </div>
         </div>
         <div class="def reveal">
           <div class="def__idx">02<span class="bar" style="background:var(--age-15)"></span></div>
           <div>
             <h3>Родительское согласие</h3>
-            <p>До порога соцсети доступны, но нужно разрешение или привязка к аккаунту взрослого. Часто на самодекларации — и потому слабо работает. <b>Италия (14)</b>, <b>Бразилия (16)</b>, американский COPPA <b>(13)</b> — именно отсюда «13+» при регистрации почти везде.</p>
+            <p>До порога соцсети доступны, но нужно разрешение или привязка к аккаунту взрослого. Часто на самодекларации — и потому слабо работает. <b>Италия (14)</b>, <b>Бразилия (16)</b>, <b>Индия (18)</b>, американский COPPA <b>(13)</b> — именно отсюда «13+» при регистрации почти везде.</p>
           </div>
         </div>
         <div class="def reveal">
           <div class="def__idx">03<span class="bar" style="background:var(--age-14)"></span></div>
           <div>
             <h3>Телефоны в школах · лимиты времени</h3>
-            <p>Не про возраст, а про место и время. Смартфоны убирают из классов (Франция, Нидерланды, Италия), а Китай ввёл «детский режим» с лимитом экранного времени и комендантским часом 22:00–06:00. На карте такие меры отмечены как ограничение, а не запрет.</p>
+            <p>Не про возраст, а про место и время. Смартфоны убирают из классов (Франция, Нидерланды, Италия, Австрия, Венгрия, Израиль), а Китай и Вьетнам ввели лимиты экранного времени и комендантский час для несовершеннолетних. На карте — серым, как мера без возрастного порога.</p>
+          </div>
+        </div>
+        <div class="def reveal">
+          <div class="def__idx">04<span class="bar" style="background:var(--no-age)"></span></div>
+          <div>
+            <h3>Проверка возраста и регулирование платформ</h3>
+            <p>Возраст не запрещают, но обязывают платформы и магазины приложений проверять его и убирать опасный контент. <b>Ирландия</b> и <b>Сингапур</b> — через кодексы онлайн-безопасности, <b>Греция</b> — через гос-приложение Kids Wallet, ЮАР и Узбекистан — через возрастную классификацию. Часто это «мягкий» путь вместо прямого запрета.</p>
           </div>
         </div>
       </div>
@@ -994,7 +1084,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
       <div class="rusec__head reveal">
         <div class="rusec__big">—<span>возрастного закона нет</span></div>
         <div>
-          <span class="eyebrow" style="color:var(--status-discussion)">Особый случай</span>
+          <span class="eyebrow" style="color:var(--status-discussion)">А что у нас?</span>
           <h2>Россия: закона нет — но обсуждают жёсткий</h2>
           <p class="rusec__lead">В России <b>нет закона</b>, который устанавливал бы минимальный возраст для соцсетей. Зато телефоны убрали с уроков, детей переводят в государственную экосистему, а в Госдуме звучат всё более радикальные идеи — от запрета до 14 лет до запрета интернета. Разбираем по источникам.</p>
         </div>
@@ -1021,6 +1111,17 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
           <p>Школьная платформа Сферум и национальный мессенджер MAX (VK + Ростелеком) стали обязательными: по 156-ФЗ школы обязаны вести официальный канал в MAX, а с 1 сентября 2025 MAX предустанавливают на новые устройства. Участие формально добровольное.</p>
           <a class="rufact__src" href="https://vk.company/ru/press/releases/12119/" target="_blank" rel="noopener">VK Company · Сферум в MAX ↗</a>
         </article>
+      </div>
+
+      <div class="ruverdict reveal">
+        <div class="ruverdict__q">Есть ли в России закон, запрещающий регистрацию в соцсетях до определённого возраста?</div>
+        <p class="ruverdict__a">Мы проверили специально — <b>прямого федерального закона нет.</b></p>
+        <ul class="ruverdict__list">
+          <li><b>152-ФЗ «О персональных данных»</b> не устанавливает «возраст цифрового согласия» — в отличие от GDPR с его планкой 13–16. <a href="https://www.consultant.ru/document/cons_doc_LAW_61801/6c94959bc017ac80140621762d2ac59f6006b08c/" target="_blank" rel="noopener">КонсультантПлюс ↗</a></li>
+          <li>Цифра «<b>14</b>» — это вывод из Гражданского кодекса (ст. 26: с 14 лет частичная дееспособность), а не норма о соцсетях. <a href="https://www.consultant.ru/document/cons_doc_LAW_5142/" target="_blank" rel="noopener">ГК РФ ↗</a></li>
+          <li>«14+» при входе в VK — это <b>правило самой платформы</b> (пользовательское соглашение), а не закон; возраст не проверяется и указывается на честном слове. <a href="https://adblogger.vk.ru/documents/terms" target="_blank" rel="noopener">VK ↗</a></li>
+          <li>Запреты регистрации до 14–16 (Свинцов, Останина) и верификация через Госуслуги — пока <b>законопроекты и предложения</b>, не принятые нормы. <a href="https://hi-tech.mail.ru/news/139726-v-gosdume-prizvali-k-zhestochajshemu-ogranicheniyu-interneta-podrobnosti/" target="_blank" rel="noopener">Hi-Tech Mail ↗</a></li>
+        </ul>
       </div>
 
       <div class="ruline reveal">
@@ -1078,7 +1179,6 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
           <div class="oped__fact"><span>Мессенджер MAX от VK признан национальным (156-ФЗ, 2025) и обязателен к предустановке на устройства с 1 сентября 2025; в школы приходит через «Сферум».</span> <a href="https://ria.ru/20250901/max-2038723229.html" target="_blank" rel="noopener">РИА ↗</a></div>
           <div class="oped__fact"><span>«Единая Россия» — против запрета соцсетей до 14 лет; ставка на «развитие отечественных платформ», а доступ детей назван «внутрисемейным делом».</span> <a href="https://www.interfax.ru/russia/1090195" target="_blank" rel="noopener">Интерфакс ↗</a></div>
         </div>
-        <blockquote class="oped__q">«Государству хочется иметь контролируемый национальный интернет… Очевидно, что пользователи будут этому сопротивляться — как минимум уходя в VPN».<cite>Александр Бахтин, инвестиционный стратег «Гарда Капитал» · <a href="https://www.forbes.ru/investicii/555300-igra-v-monopoliu-kak-blokirovki-whatsapp-i-telegram-pomogli-akciam-vk" target="_blank" rel="noopener">Forbes.ru ↗</a></cite></blockquote>
         <p class="oped__caveat"><b>Честно оговоримся:</b> прямого тезиса «власти не запретят соцсети, потому что владеют VK» в источниках нет — это наша интерпретация фактов.</p>
       </div>
     </div>
@@ -1114,6 +1214,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
       <div class="foot__grid">
         <div>
           <h4>МЕТОДОЛОГИЯ</h4>
+          <p class="foot__stats" id="foot-stats"></p>
           <p>На карте — страны, где есть закон, принятая политика или официально внесённый национальный законопроект, устанавливающий возрастной порог для соцсетей или смартфонов. «Действует» не равно «применяется»: часть законов оспорена в судах (США) или ждёт подзаконных актов.</p>
           <p class="foot__note">Региональные меры (отдельные штаты США, провинции Канады) и школьные запреты телефонов показаны на уровне страны и упомянуты в карточках. Резолюция Европарламента (16+, ноябрь 2025) носит рекомендательный характер и в карту не включена. Россия отмечена статусом «закона нет, идут споры»: возрастной порог для соцсетей законом не установлен — подробности в разделе «Россия».</p>
         </div>
@@ -1122,6 +1223,14 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
           <div class="srclist" id="srclist" aria-labelledby="srclist-title"></div>
         </div>
       </div>
+      <a class="farewell" href="https://t.me/ne_cybersec" target="_blank" rel="noopener">
+        <img class="farewell__logo" src="logo.jpg" alt="" onerror="this.style.display='none'">
+        <span class="farewell__txt">
+          <span class="farewell__name">ne_cybersec</span>
+          <span class="farewell__msg">Спасибо, что дочитали. Успехов в поиске лучших решений для несовершеннолетних граждан России.</span>
+        </span>
+        <span class="farewell__cta">Подписаться в Telegram →</span>
+      </a>
       <nav class="tags" aria-label="Темы">
         <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#соцсети</a>
         <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#дети</a>
@@ -1210,6 +1319,14 @@ function colorFor(c){
   return AGE_COLORS[c.age];
 }
 function ageText(c){ return c.age==null ? '—' : c.age; }
+
+// Флаги стран (эмодзи) для цитат
+const FLAG = {
+  'Australia':'🇦🇺','Malaysia':'🇲🇾','Indonesia':'🇮🇩','United States of America':'🇺🇸','Belgium':'🇧🇪','Italy':'🇮🇹','Brazil':'🇧🇷','China':'🇨🇳','France':'🇫🇷','Norway':'🇳🇴','Denmark':'🇩🇰','Spain':'🇪🇸','Greece':'🇬🇷','United Kingdom':'🇬🇧','Germany':'🇩🇪','Canada':'🇨🇦','New Zealand':'🇳🇿','Netherlands':'🇳🇱','Finland':'🇫🇮','Russia':'🇷🇺','Turkey':'🇹🇷','United Arab Emirates':'🇦🇪','Vietnam':'🇻🇳','India':'🇮🇳','Saudi Arabia':'🇸🇦','Taiwan':'🇹🇼','South Korea':'🇰🇷','Japan':'🇯🇵','Singapore':'🇸🇬','Ireland':'🇮🇪','Portugal':'🇵🇹','Romania':'🇷🇴','Pakistan':'🇵🇰','Philippines':'🇵🇭','Kazakhstan':'🇰🇿','Austria':'🇦🇹','Hungary':'🇭🇺','Poland':'🇵🇱','Czechia':'🇨🇿','Israel':'🇮🇱','Mexico':'🇲🇽','Argentina':'🇦🇷','South Africa':'🇿🇦','Uzbekistan':'🇺🇿','Sweden':'🇸🇪','Switzerland':'🇨🇭','Thailand':'🇹🇭','Iran':'🇮🇷','Albania':'🇦🇱',
+  'Bulgaria':'🇧🇬','Croatia':'🇭🇷','Slovakia':'🇸🇰','Slovenia':'🇸🇮','Latvia':'🇱🇻','Estonia':'🇪🇪','Cyprus':'🇨🇾','Serbia':'🇷🇸','Kyrgyzstan':'🇰🇬','Armenia':'🇦🇲','Azerbaijan':'🇦🇿','Mongolia':'🇲🇳','Sri Lanka':'🇱🇰','Egypt':'🇪🇬','Morocco':'🇲🇦','Oman':'🇴🇲','Kenya':'🇰🇪','Nigeria':'🇳🇬','Ghana':'🇬🇭','Rwanda':'🇷🇼','Colombia':'🇨🇴','Chile':'🇨🇱','Peru':'🇵🇪','Ecuador':'🇪🇨','Costa Rica':'🇨🇷','Panama':'🇵🇦','Dominican Republic':'🇩🇴',
+  'global':'🌍'
+};
+function flag(country){ return FLAG[country] || ''; }
 
 /* ---------------- QUOTES (реальные высказывания со ссылками) ---------------- */
 const STANCE = {
@@ -1376,6 +1493,8 @@ const QUOTES = [
   {author:'Филипп Вампфлер', role:'учитель старших классов, эксперт по цифре', country:'Switzerland', stance:'critic', q:'Запрет — это быстрое и простое решение, которое позволяет уйти от более сложной проблемы.', src:'https://www.swissinfo.ch/eng/education/phone-bans-in-schools-why-swiss-teachers-are-sceptical/91358723', srcName:'swissinfo'},
   {author:'Тала Абдулрахман', role:'ученица 9 класса, 15 лет', country:'Saudi Arabia', stance:'child', q:'Некоторые одноклассницы злые и любят высмеивать других. Если нельзя предотвратить травлю — пусть хотя бы не нарушают нашу частную жизнь.', src:'https://www.arabnews.com/node/1920591/saudi-arabia', srcName:'Arab News'},
   {author:'Леонард', role:'ученик лицея, 16 лет, Париж', country:'France', stance:'critic', q:'Признаюсь, если бы это меня касалось, меня бы это немного разозлило. Эта мера наверняка достанет немало молодёжи.', src:'https://www.franceinfo.fr/internet/reseaux-sociaux/temoignages-interdire-les-reseaux-sociaux-aux-moins-de-15-ans-on-a-demande-a-des-adolescents-ce-qu-ils-en-pensaient_7716667.html', srcName:'France Info'},
+  {author:'Абдель Фаттах ас-Сиси', role:'президент Египта', country:'Egypt', stance:'official', q:'Нужно ограничить использование детьми соцсетей, пока они не достигнут возраста, в котором смогут справляться с этим должным образом.', src:'https://www.arabnews.com/node/2630645/amp', srcName:'Arab News'},
+  {author:'Правительство Эстонии', role:'официальная позиция министров', country:'Estonia', stance:'critic', q:'Возрастные запреты неисполнимы — дети найдут способ их обойти. Правильный путь — применять GDPR к самим платформам и развивать цифровую грамотность.', src:'https://thenextweb.com/news/estonia-eu-child-social-media-ban-opposition', srcName:'The Next Web'},
   {author:'Райли Аллен', role:'школьник, 15 лет, ферма в Юж. Австралии', country:'Australia', stance:'critic', q:'Не думаю, что для нас последствия будут позитивными. У нас тут и так немного способов связаться друг с другом.', src:'https://www.post-gazette.com/news/world/2025/12/09/australia-social-media-ban-friends/stories/202512090094', srcName:'AP'},
   {author:'Калам', role:'школьник 5 класса, 11 лет, Бекаси', country:'Indonesia', stance:'child', q:'Если я больше не смогу играть в Roblox, мне будет немного грустно.', src:'https://global.chinadaily.com.cn/a/202604/08/WS69d5b20aa310d6866eb4228f.html', srcName:'China Daily / AFP'},
   {author:'Ава Хавидич', role:'старшеклассница, 18 лет, Флорида', country:'United States of America', stance:'critic', q:'Когда что-то запрещают, для учеников это иногда как зелёный свет: «ладно, а как мне это обойти, как всё равно этим пользоваться?»', src:'https://www.edweek.org/leadership/new-florida-law-aims-to-get-kids-off-social-media-will-it-work/2024/03', srcName:'Education Week'},
@@ -1541,6 +1660,89 @@ const COUNTRIES = [
   {key:"Albania", ru:"Албания", age:null, status:"discussion", regime:"platform", year:2025, scope:"Годовой запрет TikTok снят и признан неконституционным",
     desc:"В марте 2025 Албания на год полностью заблокировала TikTok для всех пользователей — премьер Рама обосновал это защитой детей после убийства подростка. В феврале 2026 запрет сняли, а 11 марта 2026 Конституционный суд признал его неконституционным как нарушение свободы слова. Действующего запрета нет.",
     src:"https://balkaninsight.com/2026/03/11/albanias-tiktok-ban-violated-free-expression-court-rules/", srcName:"Balkan Insight"},
+
+  // — расширение покрытия (Европа, Азия, Африка, Латинская Америка) —
+  {key:"Bulgaria", ru:"Болгария", age:null, status:"enacted", regime:"school", year:2026, scope:"Запрет телефонов в школах",
+    desc:"Поправки к Закону о школьном образовании ввели общенациональный запрет на телефоны в школах с января 2026; исключения — учебные, медицинские и экстренные. Около 800 школ ввели запрет ещё до закона.",
+    src:"https://www.novinite.com/articles/235249/Bulgaria+to+Ban+Mobile+Phones+in+Schools+Starting+January", srcName:"Novinite"},
+  {key:"Croatia", ru:"Хорватия", age:null, status:"enacted", regime:"school", year:2026, scope:"Запрет телефонов в начальной школе",
+    desc:"С марта 2026 Минобразования запретило телефоны в начальных школах на всей территории, включая перемены — хранить в рюкзаке или шкафчике. Пилот в 100 школах Загреба снизил травлю и улучшил концентрацию.",
+    src:"https://www.croatiaweek.com/croatia-mobile-phone-ban-primary-schools-education-rules/", srcName:"Croatia Week"},
+  {key:"Slovakia", ru:"Словакия", age:null, status:"enacted", regime:"school", year:2025, scope:"Запрет телефонов в начальной школе",
+    desc:"Запрет на телефоны, смарт-часы и планшеты в 1–3 классах (уроки и перемены); в 4–9 — только в учебных целях с разрешения учителя. Исключения для детей с инвалидностью.",
+    src:"https://phonelocker.com/slovakia-bans-mobile-phones-in-primary-schools/", srcName:"Phone Locker"},
+  {key:"Slovenia", ru:"Словения", age:15, status:"proposed", regime:"ban", year:2026, scope:"Запрет соцсетей до 15 (законопроект)",
+    desc:"В феврале 2026 вице-премьер анонсировал законопроект о запрете соцсетей (TikTok, Snapchat, Instagram) детям до 15. Готовит Минобразования с участием экспертов.",
+    src:"https://euperspectives.eu/2026/02/slovenia-to-join-the-crowd-as-it-prepares-legislation-to-ban-social-media-for-under-15s/", srcName:"EU Perspectives"},
+  {key:"Latvia", ru:"Латвия", age:null, status:"enacted", regime:"school", year:2025, scope:"Запрет телефонов в школах",
+    desc:"С мая 2025 запрет телефонов для дошкольников и 1–6 классов; с марта 2026 расширен до 9 класса (полностью с 1 июня 2026). Использование — только в учебных целях с санкции учителя.",
+    src:"https://eng.lsm.lv/article/society/education/10.10.2024-smart-phone-use-banned-for-young-students-in-latvian-schools.a571992/", srcName:"LSM.lv"},
+  {key:"Estonia", ru:"Эстония", age:null, status:"discussion", regime:"discussion", year:2025, scope:"Открытое противодействие запретам",
+    desc:"Эстония (вместе с Бельгией) отказалась подписать «Ютландскую декларацию» об ограничении соцсетей для детей. Министры считают возрастные запреты неисполнимыми и предлагают применять GDPR к платформам и развивать цифровую грамотность.",
+    src:"https://thenextweb.com/news/estonia-eu-child-social-media-ban-opposition", srcName:"The Next Web"},
+  {key:"Cyprus", ru:"Кипр", age:15, status:"proposed", regime:"ban", year:2026, scope:"Запрет соцсетей до 15 через цифровой ID",
+    desc:"Президент Христодулидис заявил, что минимальный возраст для соцсетей будет 15. Кипр пилотирует приложение проверки возраста ЕС, интегрируя его в нацкошелёк «Digital Citizen».",
+    src:"https://www.kiprinform.com/en/cyprus_news/cyprus-plans-under-15-social-media-ban-using-eu-age-verification-via-digital-citizen-app/", srcName:"Cyprus Inform"},
+  {key:"Serbia", ru:"Сербия", age:null, status:"enacted", regime:"platform", year:2025, scope:"Защита несовершеннолетних в медиа",
+    desc:"В июне 2025 приняты поправки к законам об электронных медиа: правила регулятора REM усиливают защиту несовершеннолетних и запрещают эксплуатирующий детей контент. Касается вещания, а не соцсетей.",
+    src:"https://www.coe.int/en/web/freedom-expression/-/serbia-moves-towards-stronger-media-rules-to-protect-minors", srcName:"Council of Europe"},
+  {key:"Kyrgyzstan", ru:"Киргизия", age:null, status:"enacted", regime:"school", year:2025, scope:"Запрет смартфонов на уроках",
+    desc:"Введён законодательный запрет на использование смартфонов школьниками во время уроков — в русле общерегионального тренда.",
+    src:"https://en.tengrinews.kz/kazakhstan_news/kazakhstan-to-introduce-ban-on-social-media-for-children-271645/", srcName:"Tengrinews"},
+  {key:"Armenia", ru:"Армения", age:null, status:"discussion", regime:"discussion", year:2026, scope:"Обсуждение ограничения соцсетей до 16",
+    desc:"В апреле 2026 власти заявили об изучении ограничений соцсетей для детей до 16; вопрос ведут министерства образования, труда и высоких технологий. Отдельно обсуждают «среду без телефонов» в школах.",
+    src:"https://armenpress.am/en/article/1246414", srcName:"Armenpress"},
+  {key:"Azerbaijan", ru:"Азербайджан", age:16, status:"proposed", regime:"ban", year:2025, scope:"Запрет соцсетей до 16 + блок приложений в школах",
+    desc:"В школах ограничили TikTok и др. соцсети. В декабре 2025 депутат Джафаров предложил парламенту запрет аккаунтов в соцсетях для детей до 16 (Instagram, Facebook, TikTok, X, Snapchat).",
+    src:"https://oc-media.org/azerbaijan-bans-tiktok-and-other-social-media-apps-in-school/", srcName:"OC Media"},
+  {key:"Mongolia", ru:"Монголия", age:16, status:"proposed", regime:"ban", year:2026, scope:"Запрет регистрации в соцсетях до 16",
+    desc:"11 марта 2026 министр образования внёс в кабинет проект закона (по образцу австралийского), запрещающий регистрацию в «возрастно-ограниченных» соцсетях детям до 16. Параллельно — запрет телефонов в школах.",
+    src:"https://asianews.network/mongolia-considers-law-restricting-social-media-registration-for-minors-under-16/", srcName:"Asia News Network"},
+  {key:"Sri Lanka", ru:"Шри-Ланка", age:12, status:"proposed", regime:"ban", year:2026, scope:"Запрет смартфонов и соцсетей до 12",
+    desc:"Министерство по делам женщин и детей предложило запрет смартфонов детям до 12 и ограничение соцсетей; к маю 2026 рекомендовано запретить экраны до 5 лет и соцсети до 12. Пока на стадии обсуждения.",
+    src:"https://www.newswire.lk/2026/05/05/sri-lanka-moves-to-restrict-childrens-access-to-social-media-and-digital-devices/", srcName:"Newswire.lk"},
+  {key:"Egypt", ru:"Египет", age:null, status:"proposed", regime:"ban", year:2026, scope:"Готовится закон об ограничении соцсетей детям",
+    desc:"В январе 2026 Палата представителей объявила о намерении внести закон о соцсетях для детей; президент ас-Сиси призвал ограничить доступ «до возраста, когда дети смогут справляться». На июнь 2026 закон не внесён.",
+    src:"https://www.arabnews.com/node/2630645/amp", srcName:"Arab News"},
+  {key:"Morocco", ru:"Марокко", age:16, status:"proposed", regime:"consent", year:2025, scope:"Запрет соцсетей до 16 + согласие родителей",
+    desc:"Парламентская группа внесла законопроект об ограничении соцсетей (Facebook, TikTok) детям до 16 с согласием родителей; Минюст анонсировал возможную проверку возраста. Пока формирующаяся рамка, не закон.",
+    src:"https://en.hespress.com/99132-morocco-mps-propose-social-media-ban-for-minors-under-16.html", srcName:"Hespress"},
+  {key:"Oman", ru:"Оман", age:null, status:"discussion", regime:"discussion", year:2026, scope:"Регулятор пересматривает доступ детей к соцсетям",
+    desc:"Регулятор связи (TRA) пересматривает использование детьми соцсетей в рамках новой базы онлайн-безопасности: родительский контроль, проверка возраста, обязанности платформ. Запланированы консультации.",
+    src:"https://www.lexis.ae/2026/02/27/oman-regulators-review-children-social-media-use-amid-digital-safety-concerns/", srcName:"Lexis Middle East"},
+  {key:"Kenya", ru:"Кения", age:null, status:"proposed", regime:"consent", year:2025, scope:"Законопроект о проверке возраста в соцсетях",
+    desc:"В мае 2025 регулятор выпустил рекомендации по онлайн-безопасности детей с проверкой возраста; в парламент внесён законопроект о проверке возраста для соцсетей. Полный запрет TikTok отклонён в пользу регулирования.",
+    src:"https://en.wikipedia.org/wiki/Social_media_age_verification_laws_by_country", srcName:"Wikipedia"},
+  {key:"Nigeria", ru:"Нигерия", age:null, status:"discussion", regime:"discussion", year:2026, scope:"Публичные консультации об ограничении соцсетей",
+    desc:"В марте 2026 министр цифровой экономики Тиджани объявил публичные консультации о возможных ограничениях соцсетей для детей (проверка возраста или минимальный возраст). На май 2026 порог не установлен.",
+    src:"https://techeconomy.ng/nigeria-social-media-age-restrictions-child-safety-survey/", srcName:"Techeconomy"},
+  {key:"Ghana", ru:"Гана", age:null, status:"proposed", regime:"platform", year:2026, scope:"Проверка возраста по Ghana Card",
+    desc:"Минсвязи и Управление кибербезопасности предложили использовать нацудостоверение Ghana Card для проверки возраста при доступе к контенту 18+. Предложение направлено в кабинет на 2026 год.",
+    src:"https://www.biometricupdate.com/202606/ghana-joins-growing-list-of-countries-pursuing-online-age-verification", srcName:"Biometric Update"},
+  {key:"Rwanda", ru:"Руанда", age:16, status:"proposed", regime:"ban", year:2026, scope:"Запрет соцсетей до 16 (готовится закон)",
+    desc:"В апреле 2026 министр ИКТ Ингабире сообщила о разработке закона о запрете соцсетей (Facebook, Instagram, YouTube) детям до 16; исполнение — через провайдеров и нацсистему цифрового ID.",
+    src:"https://www.newtimes.co.rw/article/35253/news/rwanda/rwanda-considers-bill-to-restrict-social-media-use-for-children-under-16", srcName:"The New Times"},
+  {key:"Colombia", ru:"Колумбия", age:null, status:"enacted", regime:"platform", year:2025, scope:"Закон 2489/2025 + проект декрета о платформах",
+    desc:"Закон 2489/2025 создал Нацкомитет по технологиям и детству; прямого запрета соцсетей нет. В апреле 2026 MinTIC вынес на обсуждение проект декрета об обязательной «безопасности по умолчанию» и родительском контроле.",
+    src:"https://colombiaone.com/2026/04/17/colombian-government-does-not-plan-to-ban-social-media-for-minors-despite-the-risks/", srcName:"Colombia One"},
+  {key:"Chile", ru:"Чили", age:16, status:"proposed", regime:"ban", year:2026, scope:"Законопроект об ограничении соцсетей до 16",
+    desc:"Минсоцразвития готовит законопроект «Безопасная цифровая среда»: ограничение соцсетей детям до 16 через требования к платформам и проверку возраста (цифровой ID Clave Única, по австралийской модели), со штрафами.",
+    src:"https://www.infobae.com/america/america-latina/2026/04/27/chile-busca-limitar-el-acceso-en-redes-sociales-a-menores-de-16-anos/", srcName:"Infobae"},
+  {key:"Peru", ru:"Перу", age:null, status:"enacted", regime:"school", year:2025, scope:"Закон 32385 о телефонах в школах",
+    desc:"13 июня 2025 принят Закон 32385, регулирующий телефоны во всех школах: использование на уроках ограничено, кроме учебных и медицинских нужд. В январе 2026 опубликован проект регламента.",
+    src:"https://lpderecho.pe/ley-32385-restringen-uso-celulares-dispositivos-similares-colegios/", srcName:"LP Derecho"},
+  {key:"Ecuador", ru:"Эквадор", age:15, status:"proposed", regime:"ban", year:2026, scope:"Запрет соцсетей до 15 (законопроект)",
+    desc:"В декабре 2025 внесён проект реформы Кодекса о детях с запретом соцсетей детям до 15; штрафы до 5% годовой местной выручки платформ. Отдельно с апреля 2025 действует регламент о телефонах в школах.",
+    src:"https://www.primicias.ec/politica/asamblea-ley-prohibicion-acceso-redes-sociales-menores-edad-ecuador-116671/", srcName:"Primicias"},
+  {key:"Costa Rica", ru:"Коста-Рика", age:14, status:"proposed", regime:"ban", year:2026, scope:"Запрет соцсетей до 14 + согласие 14–18",
+    desc:"Законопроект 25.336 запрещает детям до 14 заводить аккаунты на платформах с социальным взаимодействием; для 14–18 — проверяемое согласие родителей. В апреле 2026 одобрен комиссией, направлен на пленум.",
+    src:"https://delfino.cr/2026/04/proyecto-que-prohibe-uso-de-redes-sociales-a-menores-de-14-anos-avanza-al-plenario", srcName:"Delfino.cr"},
+  {key:"Panama", ru:"Панама", age:null, status:"discussion", regime:"discussion", year:2026, scope:"Гражданский законопроект о соцсетях",
+    desc:"Гражданская инициатива (из студенческого проекта USMA) предложила закон о регулировании соцсетей для детей; в марте 2026 признан жизнеспособным. Регулирование телефонов в школах обсуждается.",
+    src:"https://www.ecotvpanama.com/nacionales/propuesta-ciudadana-busca-regular-redes-sociales-menores-edad-n6074064", srcName:"EcoTV Panamá"},
+  {key:"Dominican Republic", ru:"Доминикана", age:null, status:"enacted", regime:"school", year:2026, scope:"Регламент по телефонам в школах + проект о соцсетях",
+    desc:"Приказ 011-2026 ввёл нацправила использования телефонов в школах: полный запрет в дошкольном звене, ограничения в начальной, контролируемое использование в средней. Параллельно рассматривается запрет соцсетей до 15.",
+    src:"https://www.infobae.com/republica-dominicana/2026/05/28/republica-dominicana-regula-el-uso-de-celulares-en-escuelas-en-todos-los-niveles-educativos/", srcName:"Infobae"},
 ];
 
 const byKey = new Map(COUNTRIES.map(c => [c.key, c]));
@@ -1638,6 +1840,11 @@ animateCount(document.getElementById('stat-ban'),   nBan);
 animateCount(document.getElementById('stat-prop'),  nProp);
 animateCount(document.getElementById('stat-total'), nTotal);
 const calloutBan=document.getElementById('callout-ban'); if(calloutBan) animateCount(calloutBan, nBan);
+const heroN=document.getElementById('hero-n'); if(heroN) heroN.textContent=nTotal;
+(function(){const fs=document.getElementById('foot-stats'); if(!fs) return;
+  const nQuotes=QUOTES.length+RU_QUOTES.length, nLaws=Object.keys(LAWLINKS).length, nMedia=Object.keys(MEDIA).length;
+  fs.innerHTML=`При подготовке статьи изучено <b>${nTotal}</b> юрисдикций, собрано <b>${nQuotes}</b> цитат, приведено <b>${nLaws}</b> ссылок на национальные законы и первоисточники, процитировано <b>${nMedia}</b> СМИ — каждая ссылка кликабельна.`;
+})();
 
 function animateCount(el, target){
   if (reduceMotion){ el.textContent = target; return; }
@@ -1925,7 +2132,7 @@ function renderCountryVoices(c){
     return `<figure class="voice" style="--c:${s.color}">
       <span class="voice__stance">${s.ru}</span>
       <blockquote>«${esc(q.q)}»</blockquote>
-      <figcaption><b>${esc(q.author)}</b><span>${esc(q.role)}</span><a href="${q.src}" target="_blank" rel="noopener">${esc(q.srcName)} ↗</a></figcaption>
+      <figcaption><b>${flag(q.country)} ${esc(q.author)}</b><span>${esc(q.role)}</span><a href="${q.src}" target="_blank" rel="noopener">${esc(q.srcName)} ↗</a></figcaption>
     </figure>`;
   }).join('') + (more>0 ? `<a class="d-voices__more" href="#quotes" onclick="document.getElementById('drawer-close').click()">ещё ${more} — в общем цитатнике ↗</a>` : '');
 }
@@ -1962,7 +2169,7 @@ function renderCountryVoices(c){
       <p class="qcard__q">${esc(q.q)}</p>
       <div class="qcard__meta">
         <span class="qcard__chip">${s.ru}</span>
-        <span class="qcard__who"><span class="qcard__author">${esc(q.author)}</span><span class="qcard__role">${esc(q.role)}${q.country!=='global'&&byKey.get(q.country)?' · '+byKey.get(q.country).ru:''}</span></span>
+        <span class="qcard__who"><span class="qcard__author">${flag(q.country)} ${esc(q.author)}</span><span class="qcard__role">${esc(q.role)}${q.country!=='global'&&byKey.get(q.country)?' · '+byKey.get(q.country).ru:''}</span></span>
         <a class="qcard__src" href="${q.src}" target="_blank" rel="noopener">${esc(q.srcName)} ↗</a>
       </div>`;
     vp.appendChild(next);
@@ -2028,7 +2235,7 @@ function renderCountryVoices(c){
     return `<figure class="ruqc" style="--c:${s.color}">
       <span class="ruqc__stance">${s.ru}</span>
       <blockquote>«${esc(q.q)}»</blockquote>
-      <figcaption><b>${esc(q.author)}</b><span>${esc(q.role)}</span><a href="${q.src}" target="_blank" rel="noopener">${esc(q.srcName)} ↗</a></figcaption>
+      <figcaption><b>🇷🇺 ${esc(q.author)}</b><span>${esc(q.role)}</span><a href="${q.src}" target="_blank" rel="noopener">${esc(q.srcName)} ↗</a></figcaption>
     </figure>`;
   }).join('');
   // свайп влево / вправо (нативный на тач + стрелки на десктопе)
@@ -2085,6 +2292,22 @@ if(!reduceMotion){
   var skip=intro.querySelector('.intro__skip');
   if(skip) skip.addEventListener('click',function(){ intro.classList.add('intro--skip'); setTimeout(done,440); });
   setTimeout(done,4900);
+})();
+</script>
+<script>
+/* Переключатель темы (день/ночь) */
+(function(){
+  var btn=document.getElementById('theme-toggle'); if(!btn) return;
+  var root=document.documentElement, icon=btn.querySelector('.theme-toggle__icon');
+  function paint(t){ if(t==='light') root.setAttribute('data-theme','light'); else root.removeAttribute('data-theme'); if(icon) icon.textContent = t==='light' ? '☀' : '☾'; }
+  var cur = root.getAttribute('data-theme')==='light' ? 'light' : 'dark';
+  paint(cur);
+  btn.addEventListener('click', function(){
+    cur = cur==='light' ? 'dark' : 'light';
+    paint(cur);
+    try{ localStorage.setItem('nc_theme', cur); }catch(e){}
+    try{ var tg=window.Telegram&&window.Telegram.WebApp; if(tg){ if(cur==='light'){ tg.setHeaderColor('#ffffff'); tg.setBackgroundColor('#f6f7f9'); } else { tg.setHeaderColor('#14161e'); tg.setBackgroundColor('#13141b'); } } }catch(e){}
+  });
 })();
 </script>
 </body>
