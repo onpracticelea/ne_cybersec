@@ -481,6 +481,25 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .ruverdict__list a:hover { color: var(--ink); }
 
 /* ============================================================
+   USA BY STATES
+   ============================================================ */
+.usa { padding-block: clamp(3rem, 7vw, 5rem); }
+.usa__head { margin-bottom: 1.6rem; }
+.usa__head h2 { font-size: clamp(1.6rem, 4vw, 2.6rem); margin: 0.4rem 0 0.8rem; }
+.usa__head p { color: var(--ink-2); max-width: 66ch; font-size: 0.95rem; text-wrap: pretty; }
+.usa__head p b { color: var(--ink); }
+.usa__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(238px, 1fr)); gap: 1rem; }
+.usac { border: 1px solid var(--line-soft); border-radius: 13px; background: var(--surface); padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.usac__top { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; }
+.usac__state { font-weight: 700; color: var(--ink); font-size: 1.05rem; }
+.usac__age { font-family: var(--mono); font-weight: 700; font-size: 1.25rem; line-height: 1; }
+.usac__badge { align-self: flex-start; font-family: var(--mono); font-size: 0.66rem; padding: 0.18rem 0.5rem; border-radius: 6px; border: 1px solid var(--c, var(--line)); color: var(--c, var(--ink-2)); }
+.usac__mech { color: var(--ink); font-size: 0.86rem; font-weight: 500; }
+.usac__desc { color: var(--ink-3); font-size: 0.82rem; line-height: 1.5; text-wrap: pretty; }
+.usac__src { margin-top: auto; padding-top: 0.2rem; font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3); text-decoration: none; border-bottom: 1px solid var(--line); align-self: flex-start; transition: color .2s; }
+.usac__src:hover { color: var(--ink); }
+
+/* ============================================================
    QUOTE WALL (cytatnik)
    ============================================================ */
 .quotes { padding-block: clamp(3rem, 7vw, 5.5rem); }
@@ -1036,6 +1055,18 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     </div>
   </section>
 
+  <!-- USA BY STATES -->
+  <section class="usa" id="usa">
+    <div class="wrap">
+      <div class="usa__head reveal">
+        <span class="eyebrow">США крупным планом</span>
+        <h2>Одна страна — разные правила</h2>
+        <p>Федеральный порог в США — только COPPA (13 лет, про данные). Возрастные ограничения вводят штаты, и почти каждый закон тут же оспаривают в судах: одни <b>действуют</b>, другие <b>заблокированы</b> или <b>отменены</b>. Нажмите карточку — источник.</p>
+      </div>
+      <div class="usa__grid" id="usa-grid"></div>
+    </div>
+  </section>
+
   <!-- QUOTE WALL -->
   <section class="quotes" id="quotes">
     <div class="wrap">
@@ -1505,6 +1536,8 @@ const QUOTES = [
   {author:'Николета', role:'школьница, 14 лет, Греция', country:'Greece', stance:'child', q:'Мы выросли с соцсетями, а теперь нам вдруг говорят «закройте их». Так это не работает. Общий запрет для детей — не считаю, что это хорошо.', src:'https://www.news247.gr/ellada/rotisame-tous-kato-ton-15-ti-lene-gia-tin-apagorefsi-ton-social-media/', srcName:'News 24/7'},
   {author:'Лола Фишер', role:'16 лет, соосн. Gen-Z Aotearoa', country:'New Zealand', stance:'child', q:'Мы унаследуем нынешние решения — так почему бы не обсуждать их с нами? Часто именно у молодёжи есть решения проблем.', src:'https://www.rnz.co.nz/national/programmes/checkpoint/audio/2018986796/pm-needs-to-speak-with-gen-z-on-social-media-ban-adviser', srcName:'RNZ'},
   {author:'Кейра Бакли', role:'старшеклассница, Онтарио', country:'Canada', stance:'child', q:'Соцсети были единственным способом общаться во время COVID — так я завела друзей. Не думаю, что ответ — запретить их совсем.', src:'https://www.cbc.ca/news/canada/london/london-ontario-canada-social-media-ban-reaction-9.7229111', srcName:'CBC News'},
+  {author:'Старшеклассник-предприниматель', role:'школьник, Флорида', country:'United States of America', stance:'critic', q:'Запустив бизнес и продвигая его через соцсети — а он полностью онлайн, — я смог сам оплатить обучение в частной школе в выпускном классе.', src:'https://www.wctv.tv/2025/01/02/tallahassee-families-react-child-social-media-ban-takes-effect-florida/', srcName:'WCTV'},
+  {author:'Electronic Frontier Foundation', role:'организация по защите цифровых прав', country:'United States of America', stance:'critic', q:'Проверка возраста волшебным образом не сделает молодёжь безопаснее: жертвуя анонимностью и приватностью ради доступа к законной речи, политики вводят, по сути, законы о цензуре.', src:'https://www.eff.org/deeplinks/2025/12/age-verification-threats-across-globe-2025-review', srcName:'EFF'},
 ];
 
 const COUNTRIES = [
@@ -1830,6 +1863,25 @@ const MEDIA = {
   'Canada':{o:'The Globe and Mail (редколлегия)',t:'Было бы прекрасно отнять детство у соцсетевых гигантов простым запретом. Увы, реальная защита детей куда сложнее.',u:'https://www.theglobeandmail.com/opinion/editorials/article-social-media-ban-regulation-kids-children/'},
   'New Zealand':{o:'The New Zealand Herald',t:'Соцсети могут вредить подросткам, но запрет — не выход: возраст в сети почти невозможно подтвердить, а VPN обойдёт барьер.',u:'https://www.nzherald.co.nz/nz/editorial-social-media-may-hurt-teenagers-but-banning-it-is-not-the-answer/FZEO3PZWZJCKBHTDYNAT6ZKBFQ/'},
 };
+
+// США по штатам (mid-2026): практика различается от штата к штату
+const US_STATES = [
+  {state:'Флорида', age:14, mech:'Запрет до 14, согласие 14–15', status:'in_force', year:2024, desc:'HB 3 запрещает аккаунты до 14 и требует согласия родителей для 14–15. Блокировку суда сняли в ноябре 2025 — закон действует, генпрокурор применяет его.', src:'https://www.cfpublic.org/politics/2025-11-26/florida-gets-ok-to-enforce-social-media-law-banning-kids', srcName:'CF Public Media'},
+  {state:'Техас', age:18, mech:'Согласие родителей до 18', status:'in_force', year:2024, desc:'SCOPE Act (HB 18): согласие родителей и ограничение данных и таргетинга. Действует с 09.2024, но проверка возраста и фильтрация контента заблокированы; апелляция в 5-м округе.', src:'https://www.texastribune.org/2025/02/07/texas-scope-act-minors-social-media-restrictions/', srcName:'Texas Tribune'},
+  {state:'Миссисипи', age:18, mech:'Согласие родителей до 18, проверка возраста', status:'in_force', year:2024, desc:'HB 1126: проверка возраста и согласие родителей для всех несовершеннолетних. Блокировка снята; Верховный суд США отказал её восстановить (август 2025) — закон действует.', src:'https://www.scotusblog.com/2025/08/supreme-court-allows-mississippi-restrictions-on-childrens-social-media-access-to-remain-in-place/', srcName:'SCOTUSblog'},
+  {state:'Огайо', age:16, mech:'Согласие родителей до 16', status:'in_force', year:2023, desc:'Закон требует согласия родителей до 16. Был отменён судом в апреле 2025, но 18 июня 2026 апелляционный суд снял запрет — закон снова не заблокирован.', src:'https://www.biometricupdate.com/202606/court-lifts-block-on-ohios-age-assurance-law-for-social-media-in-defeat-for-netchoice', srcName:'Biometric Update'},
+  {state:'Теннесси', age:18, mech:'Согласие родителей до 18, проверка возраста', status:'in_force', year:2024, desc:'HB 1891: проверка возраста и согласие родителей до 18, в силе с 01.2025. Суд отказал в блокировке по процессуальным причинам; апелляция слушалась в феврале 2026 — статус неустойчив.', src:'https://netchoice.org/netchoice-v-skrmetti-tennessee/', srcName:'NetChoice'},
+  {state:'Калифорния', age:18, mech:'Согласие на «аддиктивные ленты» до 18', status:'in_force', year:2024, desc:'SB 976 запрещает «аддиктивные ленты» и ночные уведомления без согласия родителей; апелляционный суд оставил это в силе (сентябрь 2025). Полная проверка возраста — с 2027.', src:'https://www.hunton.com/privacy-and-cybersecurity-law-blog/ninth-circuit-upholds-addictive-social-media-feed-ban-and-default-privacy-settings-for-minors-in-californias-protecting-our-kids-from-social-media-addiction-act', srcName:'Hunton AK'},
+  {state:'Мэриленд', age:18, mech:'Проверка возраста / «дизайн в интересах детей»', status:'in_force', year:2024, desc:'Maryland Kids Code обязывает сервисы оценивать возраст и проектировать продукты в интересах детей; действует с октября 2024 (судебного запрета нет).', src:'https://blog.ericgoldman.org/archives/2025/11/challenge-to-marylands-kid-code-survives-motion-to-dismiss-netchoice-v-brown.htm', srcName:'Eric Goldman'},
+  {state:'Коннектикут', age:null, mech:'Ограничение «аддиктивных» функций для детей', status:'in_force', year:2023, desc:'SB 3 (расширен в 2025) обязывает платформы ограничивать функции вовлечения для несовершеннолетних и усиливать защиту данных. Действует, судом не заблокирован.', src:'https://www.multistate.us/insider/2025/10/8/eight-states-enact-minor-social-media-bans-despite-court-fights', srcName:'MultiState'},
+  {state:'Юта', age:18, mech:'Согласие родителей до 18, проверка возраста', status:'enjoined', year:2024, desc:'Minor Protection in Social Media Act: оценка возраста и защиты по умолчанию. Заблокирован судом в сентябре 2024 как нарушение Первой поправки; апелляция в 10-м округе.', src:'https://www.courthousenews.com/utah-urges-10th-circuit-to-reinstate-social-media-law-for-minors/', srcName:'Courthouse News'},
+  {state:'Джорджия', age:16, mech:'Согласие родителей до 16, проверка возраста', status:'enjoined', year:2024, desc:'SB 351: проверка возраста и согласие родителей до 16. Заблокирован судом 26 июня 2025 за день до вступления в силу; генпрокурор подал апелляцию.', src:'https://georgiarecorder.com/briefs/judge-blocks-georgias-new-social-media-age-verification-law-just-before-it-was-set-to-start/', srcName:'Georgia Recorder'},
+  {state:'Вирджиния', age:16, mech:'Лимит 1 час/день до 16 без согласия родителей', status:'enjoined', year:2025, desc:'SB 854 ограничивает пользователей до 16 одним часом в день на приложение без согласия родителей. Вступил в силу 01.01.2026, но заблокирован судом 27.02.2026.', src:'https://privacymatters.dlapiper.com/2026/03/virginias-social-media-time%E2%80%91limit-law-for-minors-blocked-key-takeaways/', srcName:'DLA Piper'},
+  {state:'Арканзас', age:18, mech:'Согласие родителей до 18, проверка возраста', status:'struck_down', year:2023, desc:'Social Media Safety Act: проверка возраста и согласие до 18. 31 марта 2025 суд окончательно признал неконституционным; принятая взамен поправка тоже заблокирована.', src:'https://netchoice.org/netchoice-secures-key-victory-for-free-speech-court-permanently-blocks-arkansas-age-verification-law/', srcName:'NetChoice'},
+  {state:'Луизиана', age:16, mech:'Согласие родителей до 16, проверка возраста', status:'struck_down', year:2023, desc:'SB 162 требовал проверки возраста и согласия до 16. 18 декабря 2025 суд окончательно отменил закон как неконституционный и расплывчатый; штат подаёт апелляцию.', src:'https://lailluminator.com/2025/12/18/louisiana-social-media-2/', srcName:'Louisiana Illuminator'},
+  {state:'Небраска', age:18, mech:'Согласие родителей до 18, проверка возраста', status:'enacted_pending', year:2025, desc:'LB 383 — один из самых строгих: согласие родителей для всех до 18. Вступает в силу 1 июля 2026; NetChoice уже подал иск, добиваясь блокировки.', src:'https://nebraskapublicmedia.org/en/news/news-articles/lawsuit-filed-over-nebraska-law-requiring-age-verification-parental-consent-for-social-media/', srcName:'Nebraska PM'},
+  {state:'Нью-Йорк', age:18, mech:'Согласие на «аддиктивные ленты» до 18', status:'enacted_pending', year:2024, desc:'SAFE For Kids Act запрещает «аддиктивные ленты» и ночные уведомления до 18 без согласия родителей. Принят в 2024, но в силу ещё не вступил — ждёт правил генпрокурора.', src:'https://ag.ny.gov/press-release/2025/attorney-general-james-releases-proposed-rules-safe-kids-act-restrict-addictive', srcName:'NY AG'},
+];
 
 /* ---------------- HERO STATS ---------------- */
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2269,6 +2321,24 @@ function renderCountryVoices(c){
   scroll.addEventListener('pointermove',e=>{ if(!down)return; const dx=e.clientX-sx; if(Math.abs(dx)>4) moved=true; scroll.scrollLeft=sl-dx; });
   const up=()=>{ down=false; scroll.classList.remove('is-grab'); };
   scroll.addEventListener('pointerup',up); scroll.addEventListener('pointerleave',up); scroll.addEventListener('pointercancel',up);
+})();
+
+/* ---------------- USA BY STATES ---------------- */
+(function initUsa(){
+  const grid=document.getElementById('usa-grid'); if(!grid || !US_STATES.length) return;
+  const ST={ in_force:{ru:'Действует',c:getCss('--age-14')}, enjoined:{ru:'Заблокирован судом',c:getCss('--age-16')}, struck_down:{ru:'Отменён судом',c:getCss('--age-18')}, enacted_pending:{ru:'Ещё не вступил',c:getCss('--no-age')} };
+  const order={in_force:0,enjoined:1,struck_down:2,enacted_pending:3};
+  grid.innerHTML=[...US_STATES].sort((a,b)=> order[a.status]-order[b.status] || a.state.localeCompare(b.state,'ru')).map(s=>{
+    const st=ST[s.status]||{ru:'',c:'var(--ink-3)'};
+    const ageCol = s.age==null ? getCss('--no-age') : (AGE_COLORS[s.age]||st.c);
+    return `<article class="usac" style="--c:${st.c}">
+      <div class="usac__top"><span class="usac__state">${esc(s.state)}</span><span class="usac__age" style="color:${ageCol}">${s.age==null?'—':s.age}</span></div>
+      <span class="usac__badge">${st.ru}${s.year?' · '+s.year:''}</span>
+      <div class="usac__mech">${esc(s.mech)}</div>
+      <div class="usac__desc">${esc(s.desc)}</div>
+      <a class="usac__src" href="${s.src}" target="_blank" rel="noopener">${esc(s.srcName)} ↗</a>
+    </article>`;
+  }).join('');
 })();
 
 /* ---------------- REVEAL ON SCROLL ---------------- */
