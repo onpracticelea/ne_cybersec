@@ -177,6 +177,21 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .topbar__meta a:hover { color: var(--ink); border-color: var(--age-14); }
 @media (max-width: 620px) { .topbar__meta { display: none; } }
 
+/* ---- Top nav (section anchors) ---- */
+.topnav { display: flex; align-items: center; gap: 0.15rem; min-width: 0; }
+.topnav a { position: relative; font-family: var(--mono); font-size: 0.8rem; color: var(--ink-3); text-decoration: none; padding: 0.42rem 0.72rem; border-radius: 9px; white-space: nowrap; transition: color 0.2s, background 0.2s; }
+.topnav a:hover { color: var(--ink); background: var(--surface-2); }
+.topnav a.is-active { color: var(--ink); }
+.topnav a.is-active::after { content: ""; position: absolute; left: 0.72rem; right: 0.72rem; bottom: 0.1rem; height: 2px; border-radius: 2px; background: var(--age-15); }
+@media (max-width: 980px) {
+  .topnav { flex: 1 1 auto; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; margin-inline: 0.4rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8px, #000 calc(100% - 8px), transparent); mask-image: linear-gradient(90deg, transparent, #000 8px, #000 calc(100% - 8px), transparent); }
+  .topnav::-webkit-scrollbar { display: none; }
+}
+@media (max-width: 520px) { .brand span:last-child { display: none; } }
+
+/* anchor offset under sticky topbar */
+#map, #quotes, #timeline, #russia, #usa, #ranking { scroll-margin-top: 74px; }
+
 /* ============================================================
    HERO
    ============================================================ */
@@ -924,6 +939,14 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
       <span class="brand__mark" aria-hidden="true"><img src="logo.jpg" alt="" loading="eager" onerror="this.remove()"></span>
       <span>@ne_cybersec</span>
     </a>
+    <nav class="topnav" aria-label="Разделы статьи">
+      <a href="#map">Карта</a>
+      <a href="#quotes">Цитаты</a>
+      <a href="#timeline">Хронология</a>
+      <a href="#russia">Россия</a>
+      <a href="#usa">США</a>
+      <a href="#ranking">Все страны</a>
+    </nav>
     <div class="topbar__right">
       <div class="topbar__meta">данные на июнь&nbsp;2026 · <a href="#sources">источники</a></div>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Светлая / тёмная тема"><span class="theme-toggle__icon">☾</span></button>
@@ -958,7 +981,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
   </section>
 
   <!-- MAP -->
-  <section class="mapsec">
+  <section class="mapsec" id="map">
     <div class="wrap">
       <div class="mapsec__head reveal">
         <div>
@@ -1020,7 +1043,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     </div>
   </section>
 
-  <!-- TYPES -->
+  <!-- TYPES / LEGEND -->
   <section class="types">
     <div class="wrap">
       <div class="types__intro reveal">
@@ -1068,36 +1091,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     </div>
   </section>
 
-  <!-- TIMELINE -->
-  <section class="tl" id="timeline">
-    <div class="wrap">
-      <div class="tl__head reveal">
-        <span class="eyebrow">Хронология</span>
-        <h2>Как мир пришёл к запретам</h2>
-        <p>От первого закона о детских данных (<b>США, COPPA, 1998</b>) до волны запретов 2024–2026. Прокрутите ленту вбок; нажмите событие — откроется карточка страны.</p>
-      </div>
-    </div>
-    <div class="tl__scroll" id="tl-scroll">
-      <div class="tl__track" id="tl-track"></div>
-    </div>
-  </section>
-
-  <!-- USA BY STATES -->
-  <section class="usa" id="usa">
-    <div class="wrap">
-      <div class="usa__head reveal">
-        <span class="eyebrow">США крупным планом</span>
-        <h2>Одна страна — разные правила</h2>
-        <p>Федеральный порог в США — только COPPA (13 лет, про данные). Возрастные ограничения вводят штаты, и почти каждый закон тут же оспаривают в судах: одни <b>действуют</b>, другие <b>заблокированы</b> или <b>отменены</b>.</p>
-      </div>
-      <details class="usa__more">
-        <summary><span class="chev">▸</span>Показать разбор по штатам <span class="usa__more-n" id="usa-count"></span></summary>
-        <div class="usa__grid" id="usa-grid"></div>
-      </details>
-    </div>
-  </section>
-
-  <!-- QUOTE WALL -->
+  <!-- QUOTES -->
   <section class="quotes" id="quotes">
     <div class="wrap">
       <div class="quotes__head reveal">
@@ -1125,21 +1119,21 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     </div>
   </section>
 
-  <!-- MID-PAGE PROMO -->
-  <section class="promo" aria-label="Канал ne_cybersec">
+  <!-- TIMELINE -->
+  <section class="tl" id="timeline">
     <div class="wrap">
-      <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">
-        <img class="promo__logo" src="logo.jpg" alt="Логотип канала ne_cybersec" onerror="this.style.display='none'">
-        <span class="promo__txt">
-          <span class="promo__name">ne_cybersec</span>
-          <span class="promo__tag">Мы защищаем традиционное образование</span>
-        </span>
-        <span class="promo__cta">Подписаться в Telegram →</span>
-      </a>
+      <div class="tl__head reveal">
+        <span class="eyebrow">Хронология</span>
+        <h2>Как мир пришёл к запретам</h2>
+        <p>От первого закона о детских данных (<b>США, COPPA, 1998</b>) до волны запретов 2024–2026. Прокрутите ленту вбок; нажмите событие — откроется карточка страны.</p>
+      </div>
+    </div>
+    <div class="tl__scroll" id="tl-scroll">
+      <div class="tl__track" id="tl-track"></div>
     </div>
   </section>
 
-  <!-- RUSSIA DEEP-DIVE -->
+  <!-- RUSSIA -->
   <section class="rusec" id="russia">
     <div class="wrap">
       <div class="rusec__head reveal">
@@ -1245,6 +1239,21 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     </div>
   </section>
 
+  <!-- USA -->
+  <section class="usa" id="usa">
+    <div class="wrap">
+      <div class="usa__head reveal">
+        <span class="eyebrow">США крупным планом</span>
+        <h2>Одна страна — разные правила</h2>
+        <p>Федеральный порог в США — только COPPA (13 лет, про данные). Возрастные ограничения вводят штаты, и почти каждый закон тут же оспаривают в судах: одни <b>действуют</b>, другие <b>заблокированы</b> или <b>отменены</b>.</p>
+      </div>
+      <details class="usa__more">
+        <summary><span class="chev">▸</span>Показать разбор по штатам <span class="usa__more-n" id="usa-count"></span></summary>
+        <div class="usa__grid" id="usa-grid"></div>
+      </details>
+    </div>
+  </section>
+
   <!-- RANKING -->
   <section class="ranking" id="ranking">
     <div class="wrap">
@@ -1266,6 +1275,20 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
         </thead>
         <tbody id="rbody"></tbody>
       </table>
+    </div>
+  </section>
+
+  <!-- PROMO -->
+  <section class="promo" aria-label="Канал ne_cybersec">
+    <div class="wrap">
+      <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">
+        <img class="promo__logo" src="logo.jpg" alt="Логотип канала ne_cybersec" onerror="this.style.display='none'">
+        <span class="promo__txt">
+          <span class="promo__name">ne_cybersec</span>
+          <span class="promo__tag">Мы защищаем традиционное образование</span>
+        </span>
+        <span class="promo__cta">Подписаться в Telegram →</span>
+      </a>
     </div>
   </section>
 
@@ -2717,6 +2740,22 @@ if(!reduceMotion){
 }else{
   document.querySelectorAll('.reveal').forEach(el=>el.classList.add('is-in'));
 }
+
+/* ---------------- TOP NAV SCROLLSPY ---------------- */
+(function navSpy(){
+  const links=[...document.querySelectorAll('.topnav a')];
+  if(!links.length) return;
+  const byId=new Map(links.map(a=>[a.getAttribute('href').slice(1), a]));
+  const secs=[...byId.keys()].map(id=>document.getElementById(id)).filter(Boolean);
+  if(!secs.length) return;
+  const setActive=(id)=>links.forEach(a=>a.classList.toggle('is-active', a.getAttribute('href')==='#'+id));
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) setActive(e.target.id); });
+  },{rootMargin:'-45% 0px -50% 0px', threshold:0});
+  secs.forEach(s=>io.observe(s));
+  // мгновенная подсветка по клику
+  links.forEach(a=>a.addEventListener('click',()=>setActive(a.getAttribute('href').slice(1))));
+})();
 </script>
 
 <!-- Intro: пропуск и удаление из DOM (классический скрипт, без ожидания CDN) -->
