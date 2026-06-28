@@ -470,6 +470,12 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .rutl a:hover { color: var(--ink); border-color: var(--status-discussion); }
 .runote { margin-top: clamp(2rem, 4vw, 3rem); padding: clamp(1.2rem, 3vw, 1.8rem); border: 1px solid var(--line); border-radius: 14px; background: color-mix(in oklch, var(--status-discussion) 9%, transparent); color: var(--ink); font-size: clamp(0.98rem, 1.6vw, 1.12rem); line-height: 1.5; text-wrap: pretty; }
 .runote b { font-weight: 600; }
+.closing { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+.closing__card { max-width: 72ch; margin-inline: auto; border: 1px solid var(--line); border-radius: 20px; padding: clamp(1.6rem, 4.5vw, 3rem); display: grid; gap: 1.1rem; background: radial-gradient(120% 140% at 0% 0%, color-mix(in oklch, var(--age-15) 12%, transparent), transparent 60%), var(--surface); box-shadow: 0 30px 80px -50px oklch(0 0 0 / 0.7); }
+.closing__card h2 { font-size: clamp(1.5rem, 3.6vw, 2.3rem); margin-top: 0.2rem; }
+.closing__card p { color: var(--ink-2); font-size: clamp(1rem, 1.9vw, 1.16rem); line-height: 1.62; text-wrap: pretty; margin: 0; }
+.closing__card p b { color: var(--ink); font-weight: 650; }
+.closing__sign { font-family: var(--mono); font-size: 0.82rem; color: var(--ink-3); margin-top: 0.3rem; }
 .ruverdict { margin-top: clamp(2rem, 4vw, 3rem); padding: clamp(1.4rem, 4vw, 2.2rem); border: 1px solid var(--status-discussion); border-radius: 16px; background: color-mix(in oklch, var(--status-discussion) 8%, transparent); }
 .ruverdict__q { font-weight: 700; color: var(--ink); font-size: clamp(1.05rem, 2.2vw, 1.4rem); line-height: 1.3; margin-bottom: 0.8rem; text-wrap: balance; }
 .ruverdict__a { color: var(--ink); font-size: clamp(1rem, 1.8vw, 1.18rem); margin-bottom: 1.1rem; }
@@ -490,6 +496,14 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .usa__head p { color: var(--ink-2); max-width: 66ch; font-size: 0.95rem; text-wrap: pretty; }
 .usa__head p b { color: var(--ink); }
 .usa__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(238px, 1fr)); gap: 1rem; }
+.usa__more > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--mono); font-size: 0.82rem; color: var(--ink-2); border: 1px solid var(--line); border-radius: 10px; padding: 0.7rem 1.1rem; transition: border-color .2s, color .2s, background .2s; -webkit-user-select: none; user-select: none; }
+.usa__more > summary::-webkit-details-marker { display: none; }
+.usa__more > summary:hover { border-color: var(--age-16); color: var(--ink); background: var(--surface); }
+.usa__more > summary .chev { transition: transform .25s var(--ease-quint); }
+.usa__more > summary .usa__more-n { color: var(--ink-3); }
+.usa__more[open] > summary { margin-bottom: 1.2rem; }
+.usa__more[open] > summary .chev { transform: rotate(90deg); }
+.usa__more:not([open]) > .usa__grid { display: none; }
 .usac { border: 1px solid var(--line-soft); border-radius: 13px; background: var(--surface); padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; }
 .usac__top { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; }
 .usac__state { font-weight: 700; color: var(--ink); font-size: 1.05rem; }
@@ -923,13 +937,13 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     <div class="wrap hero__grid">
       <div>
         <h1>До какого возраста детям <span class="em">закрывают соцсети</span> в мире</h1>
-        <p class="hero__intro">Изучение практики ограничений для детей в интернете в <b id="hero-n">49</b> странах. Попробуем рассмотреть международный опыт и понять — а необходимы ли ограничения в России? Становятся ли ограничения пользой для ребёнка?</p>
+        <p class="hero__intro">Изучение практики ограничений для детей в интернете в <b id="hero-n">99</b> странах мира. Попробуем рассмотреть международный опыт и понять — а необходимы ли ограничения в России? Становятся ли ограничения пользой для ребёнка?</p>
         <p class="hero__dek">За два года мир развернулся к экранам спиной. От Австралии до Норвегии правительства устанавливают возрастной порог для социальных сетей и смартфонов. <b>Наведите на страну</b>, чтобы увидеть, с какого возраста и насколько строго.</p>
       </div>
       <div class="stats" aria-label="Ключевые цифры">
         <div class="stat">
           <span class="stat__num is-ban" data-count="0" id="stat-ban">0</span>
-          <span class="stat__label">страны: прямой запрет соцсетей <b>принят</b><span>Австралия, Турция, ОАЭ, Малайзия, Индонезия</span></span>
+          <span class="stat__label">страны: прямой запрет соцсетей <b>принят</b><span>Австралия, Турция, ОАЭ, Малайзия, Индонезия, Габон</span></span>
         </div>
         <div class="stat">
           <span class="stat__num is-prop" data-count="0" id="stat-prop">0</span>
@@ -1074,9 +1088,12 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
       <div class="usa__head reveal">
         <span class="eyebrow">США крупным планом</span>
         <h2>Одна страна — разные правила</h2>
-        <p>Федеральный порог в США — только COPPA (13 лет, про данные). Возрастные ограничения вводят штаты, и почти каждый закон тут же оспаривают в судах: одни <b>действуют</b>, другие <b>заблокированы</b> или <b>отменены</b>. Нажмите карточку — источник.</p>
+        <p>Федеральный порог в США — только COPPA (13 лет, про данные). Возрастные ограничения вводят штаты, и почти каждый закон тут же оспаривают в судах: одни <b>действуют</b>, другие <b>заблокированы</b> или <b>отменены</b>.</p>
       </div>
-      <div class="usa__grid" id="usa-grid"></div>
+      <details class="usa__more">
+        <summary><span class="chev">▸</span>Показать разбор по штатам <span class="usa__more-n" id="usa-count"></span></summary>
+        <div class="usa__grid" id="usa-grid"></div>
+      </details>
     </div>
   </section>
 
@@ -1129,8 +1146,8 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
         <div class="rusec__big">—<span>возрастного закона нет</span></div>
         <div>
           <span class="eyebrow" style="color:var(--status-discussion)">А что у нас?</span>
-          <h2>Россия: закона нет — но обсуждают жёсткий</h2>
-          <p class="rusec__lead">В России <b>нет закона</b>, который устанавливал бы минимальный возраст для соцсетей. Зато телефоны убрали с уроков, детей переводят в государственную экосистему, а в Госдуме звучат всё более радикальные идеи — от запрета до 14 лет до запрета интернета. Разбираем по источникам.</p>
+          <h2>Россия: закона нет</h2>
+          <p class="rusec__lead">В России <b>нет закона</b>, который устанавливал бы минимальный возраст для соцсетей. Зато телефоны убрали с уроков, детей переводят в государственную экосистему, а в Госдуме звучат всё более радикальные идеи — от запрета до 14 лет, или запрета Интернета вообще. Разбираем по источникам.</p>
         </div>
       </div>
 
@@ -1249,6 +1266,20 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
         </thead>
         <tbody id="rbody"></tbody>
       </table>
+    </div>
+  </section>
+
+  <!-- ЗАКЛЮЧЕНИЕ -->
+  <section class="closing">
+    <div class="wrap">
+      <div class="closing__card reveal">
+        <span class="eyebrow">Зачем мы это собрали</span>
+        <h2>Вместо вывода</h2>
+        <p>Мы проделали эту работу, желая побудить российское общество к дискуссии о том, что важнее для детей в Интернете — <b>запрет</b> или <b>свобода</b>. Мир уже разделился: где-то возрастной порог защищает, где-то — лишь выталкивает подростков на нерегулируемые площадки и в обход через VPN. Готового, единственно верного ответа нет ни у одной из стран на этой карте.</p>
+        <p>Мы намеренно собрали и сторонников, и критиков: спор о детстве в цифровую эпоху слишком важен, чтобы сводить его к одному лозунгу. Решать в конечном счёте не государству и не платформам, а взрослым рядом с ребёнком — и пусть это решение будет осознанным, а не продиктованным страхом или равнодушием.</p>
+        <p>Желаем вам успехов в самом главном — уберечь детей от по-настоящему опасного, не отняв у них того, что делает их детьми.</p>
+        <div class="closing__sign">— редакция @ne_cybersec</div>
+      </div>
     </div>
   </section>
 
@@ -2661,6 +2692,7 @@ function renderCountryVoices(c){
 /* ---------------- USA BY STATES ---------------- */
 (function initUsa(){
   const grid=document.getElementById('usa-grid'); if(!grid || !US_STATES.length) return;
+  const cnt=document.getElementById('usa-count'); if(cnt) cnt.textContent='('+US_STATES.length+')';
   const ST={ in_force:{ru:'Действует',c:getCss('--age-14')}, enjoined:{ru:'Заблокирован судом',c:getCss('--age-16')}, struck_down:{ru:'Отменён судом',c:getCss('--age-18')}, enacted_pending:{ru:'Ещё не вступил',c:getCss('--no-age')} };
   const order={in_force:0,enjoined:1,struck_down:2,enacted_pending:3};
   grid.innerHTML=[...US_STATES].sort((a,b)=> order[a.status]-order[b.status] || a.state.localeCompare(b.state,'ru')).map(s=>{
